@@ -2,12 +2,12 @@
 
 ```bash
 ## Commands used for installing the software
-wget ftp://ftp.ccb.jhu.edu/pub/infphilo/hisat2/downloads/hisat2-2.0.4-Linux_x86_64.zip
-unzip hisat2-2.0.4-Linux_x86_64.zip
-chmod -R 755 hisat2-2.0.4
+wget ftp://ftp.ccb.jhu.edu/pub/infphilo/hisat2/downloads/hisat2-2.1.0-Linux_x86_64.zip
+unzip hisat2-2.1.0-Linux_x86_64.zip
+chmod -R 755 hisat2-2.1.0
 
 ## Ignore all downloaded/installed files
-echo "hisat2-2.0.4*" > .gitignore
+echo "hisat2-2.1.0*" > .gitignore
 
 ## Version control files
 git add .gitignore
@@ -36,7 +36,7 @@ Currently Loaded Modules:
 
 
 $ date
-Tue Oct 23 16:14:12 EDT 2018
+Tue Oct 23 16:58:09 EDT 2018
 $ echo "User: ${USER}"
 User: lcollado
 $ echo "Hostname: ${HOSTNAME}"
