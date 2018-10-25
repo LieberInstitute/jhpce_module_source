@@ -8,7 +8,7 @@ chmod -R 755 salmon-0.11.3-linux_x86_64
 
 ## Ignore all downloaded/installed files
 cat <<EOT>> .gitignore
-Salmon-0.11.3*
+salmon-0.11.3*
 EOT
 
 ## Version control files
