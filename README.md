@@ -37,7 +37,7 @@ __Step 4.__ Edit the template README.md in the new directory and install the sof
 __Step 5.__ Make sure that the permissions are set correctly at the end.
 
 ```bash
-chmod 755 -R hisat2/2.0.4/
+chmod 775 -R hisat2/2.0.4/
 ```
 
 
