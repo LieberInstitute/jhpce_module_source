@@ -2,35 +2,16 @@
 
 ```bash
 ## Commands used for installing the software
-git clone https://github.com/griffithlab/regtools && \
-    cd regtools && \
+wget https://github.com/griffithlab/regtools/archive/0.3.0.tar.gz -O regtools-0.3.0.tar.gz && \
+    tar -xvf regtools-0.3.0.tar.gz &&\
+    cd regtools-0.3.0 && \
     mkdir build && \
     cd build && \
     cmake .. && \
     make
 
 ## Ignore all downloaded/installed files
-cd /jhpce/shared/jhpce/libd/regtools/0.5.0
-echo "regtools" > .gitignore
-
-## Version control files
-git add .gitignore
-git add README.md
-```
-
-This could also work:
-
-```bash
-wget https://github.com/griffithlab/regtools/archive/0.5.0.tar.gz -O regtools-0.5.0.tar.gz && \
-    tar -xvf regtools-0.5.0.tar.gz &&\
-    cd regtools-0.5.0 && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    make
-
-## Ignore all downloaded/installed files
-cd /jhpce/shared/jhpce/libd/regtools/0.5.0
+cd /jhpce/shared/jhpce/libd/regtools/0.3.0
 echo "regtools*" > .gitignore
 
 ## Version control files
@@ -59,9 +40,9 @@ Currently Loaded Modules:
 
 
 $ date
-Mon Oct 29 14:23:01 EDT 2018
+Tue Oct 30 12:02:49 EDT 2018
 $ echo "User: ${USER}"
 User: lcollado
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-075
+Hostname: compute-062
 ```
