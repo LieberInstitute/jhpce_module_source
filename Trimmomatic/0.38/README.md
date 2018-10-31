@@ -6,6 +6,9 @@ wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-
 unzip Trimmomatic-0.38.zip
 chmod -R 755 Trimmomatic-0.38
 
+## Might help?
+ln -s /jhpce/shared/jhpce/libd/Trimmomatic/0.38/Trimmomatic-0.38/trimmomatic-0.38.jar trimmomatic.jar
+
 ## Ignore all downloaded/installed files
 cat <<EOT>> .gitignore
 Trimmomatic-0.38*
