@@ -1,0 +1,7 @@
+htslib*
+bin
+lib
+include
+libBigWig
+share
+WiggleTools
