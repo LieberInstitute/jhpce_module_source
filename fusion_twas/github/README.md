@@ -23,6 +23,28 @@ git add .gitignore
 git add README.md
 ```
 
+# Complete installation
+
+See http://gusevlab.org/projects/fusion/ for full instructions.
+
+```R
+install.packages(c('optparse', 'RColorBrewer', 'glmnet'))
+
+## If needed: install.packages('devtools')
+devtools::install_github('gabraham/plink2R/plink2R')
+```
+
+Currently, we haven't installed the `GEMMA` software http://www.xzlab.org/software.html which is needed when using BSLMM according to the manual
+
+# Usage
+
+Use the full path when calling the `fusion_twas` R scripts. For example:
+
+```bash
+module load fusion_twas
+Rscript /jhpce/shared/jhpce/libd/fusion_twas/github/fusion_twas/FUSION.compute_weights.R --help
+```
+
 # Reproducibility
 
 ```bash
