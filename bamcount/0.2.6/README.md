@@ -7,8 +7,8 @@
 module load wiggletools/1.2.1
 
 ## Get bamcount
-wget https://github.com/BenLangmead/bamcount/releases/download/0.2.5/bamcount-0.2.5.zip
-unzip bamcount-0.2.5.zip
+wget https://github.com/BenLangmead/bamcount/releases/download/0.2.6/bamcount-0.2.6.zip
+unzip bamcount-0.2.6.zip
 
 ## Ignore all downloaded/installed files
 echo "bamcount*" > .gitignore
