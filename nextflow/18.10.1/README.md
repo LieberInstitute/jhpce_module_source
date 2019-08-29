@@ -2,7 +2,8 @@
 
 ```bash
 ## Commands used for installing the software
-module load java/1.8.0
+# As of 2019-08-29 the java module no longer exists
+# module load java/1.8.0
 curl -s https://get.nextflow.io | bash
 
 ## Ignore all downloaded/installed files
