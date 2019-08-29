@@ -70,7 +70,6 @@ echo "Hostname: ${HOSTNAME}"
 ```
 
 ```bash
-## copy paste the output from the previous commands
 $ module list
 
 Currently Loaded Modules:
