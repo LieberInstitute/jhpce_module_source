@@ -2,11 +2,12 @@
 
 ```bash
 ## Commands used for installing the software
-wget https://github.com/alexdobin/STAR/archive/2.7.2b.tar.gz
-tar -xzf 2.7.2b.tar.gz
+
+wget https://github.com/alexdobin/STAR/archive/2.5.3a.zip
+tar -xzf 2.5.3a.tar.gz
 
 ## Ignore all downloaded/installed files
-echo "*2.7.2b*" >> .gitignore
+echo "*2.5.3a*" >> .gitignore
 
 ## Version control files
 git add .gitignore
@@ -34,7 +35,7 @@ Currently Loaded Modules:
 
 
 $ date
-Thu Sep 12 14:41:26 EDT 2019
+Thu Sep 12 14:48:13 EDT 2019
 $ echo "User: ${USER}"
 User: lcollado
 $ echo "Hostname: ${HOSTNAME}"
