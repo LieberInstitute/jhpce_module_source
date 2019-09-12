@@ -3,7 +3,7 @@
 ```bash
 ## Commands used for installing the software
 
-wget https://github.com/alexdobin/STAR/archive/2.5.3a.zip
+wget https://github.com/alexdobin/STAR/archive/2.5.3a.tar.gz
 tar -xzf 2.5.3a.tar.gz
 
 ## Ignore all downloaded/installed files
