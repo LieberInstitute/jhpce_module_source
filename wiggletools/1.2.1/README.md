@@ -2,26 +2,27 @@
 
 ```bash
 ## Commands used for installing the software
-git clone https://github.com/dpryan79/libBigWig.git && \
+module unload conda_R
+module unload conda
+#module load gcc/5.5.0
+
+git clone git@github.com:dpryan79/libBigWig.git && \
     cd libBigWig && \
     make prefix=/jhpce/shared/jhpce/libd/wiggletools/1.2.1 install
 
 cd /jhpce/shared/jhpce/libd/wiggletools/1.2.1
 
-wget https://github.com/samtools/htslib/releases/download/1.9/htslib-1.9.tar.bz2 && \
-     tar -xjvf htslib-1.9.tar.bz2 && \
-     cd htslib-1.9 && \
-     make && \
-     make prefix=/jhpce/shared/jhpce/libd/wiggletools/1.2.1 install
+module use /jhpce/shared/community/modulefiles/core
+module load htslib/1.9
+## Also add htslib/1.9 to LIBRARY_PATH (not needed if using: module use /jhpce/shared/jhpce/modulefiles/libd)
+export LIBRARY_PATH="/jhpce/shared/community/core/htslib/1.9/lib:${LIBRARY_PATH}"
 
-cd /jhpce/shared/jhpce/libd/wiggletools/1.2.1
-
-export C_INCLUDE_PATH="/jhpce/shared/jhpce/libd/wiggletools/1.2.1/include:${C_INCLUDE_PATH}"
+export C_INCLUDE_PATH="/jhpce/shared/jhpce/libd/wiggletools/1.2.1/include:${C_INCLUDE_PATH}" #:/jhpce/shared/jhpce/core/conda/miniconda3-4.6.14/envs/svnR-3.6/include/ ## for curl/curl.h
 export LD_LIBRARY_PATH="/jhpce/shared/jhpce/libd/wiggletools/1.2.1/lib:${LD_LIBRARY_PATH}"
-export LIBRARY_PATH="/jhpce/shared/jhpce/libd/wiggletools/1.2.1/lib:${LIBRARY_PATH}"
-export PATH="/jhpce/shared/jhpce/libd/wiggletools/1.2.1/bin:${PATH}"
+#export LIBRARY_PATH="/jhpce/shared/jhpce/libd/wiggletools/1.2.1/lib:${LIBRARY_PATH}"
 
-git clone https://github.com/Ensembl/WiggleTools.git && \
+module load gcc/5.5.0
+git clone git@github.com:Ensembl/WiggleTools.git && \
     cd WiggleTools && \
     make
 
