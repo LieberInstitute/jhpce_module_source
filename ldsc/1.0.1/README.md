@@ -5,12 +5,11 @@
 git clone https://github.com/shz9/ldsc.git
 
 ## Ignore all downloaded/installed files
-cd ../..
-echo "ldsc/1.0.1/ldsc" >> .gitignore
+echo "ldsc*" >> .gitignore
 
 ## Version control files
 git add .gitignore
-git add ldsc/1.0.1/README.md
+git add README.md
 ```
 
 # Reproducibility
