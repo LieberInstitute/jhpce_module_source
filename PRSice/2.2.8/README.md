@@ -2,16 +2,20 @@
 
 ```bash
 ## Commands used for installing the software
-mkdir qctool
-cd qctool
-hg clone -r beta https://gavinband@bitbucket.org/gavinband/qctool
-./waf-1.5.18 configure
-./waf-1.5.18
+## Instructions from https://www.prsice.info/compilation/
+curl https://codeload.github.com/choishingwan/PRSice/tar.gz/2.2.8 > PRSice.tar.gz
+tar -xvf PRSice.tar.gz
+mv PRSice-2* PRSice-local
+cd PRSice-local
+mkdir build
+cd build
+cmake ../
+make
 cd ..
-chmod -R 775 qctool
+chmod -R 775 PRSice-local
 
 ## Ignore all downloaded/installed files
-echo "qctool*" > .gitignore
+echo "PRSice*" > .gitignore
 
 ## Version control files
 git add .gitignore
