@@ -1,0 +1,7 @@
+*.tar.*
+lib*
+bin
+include
+share
+MethylDackel*
+htslib*
