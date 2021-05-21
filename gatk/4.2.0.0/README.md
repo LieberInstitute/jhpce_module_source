@@ -1,12 +1,26 @@
 ```bash
 ## Commands used for installing the software
+wget https://github.com/broadinstitute/gatk/releases/download/4.2.0.0/gatk-4.2.0.0.zip
 
+unzip gatk-4.2.0.0.zip
+rm gatk-4.2.0.0.zip
+
+mv gatk-4.2.0.0 4.2.0.0
+mkdir gatk
+mv 4.2.0.0 gatk
+
+# Remove the README that comes with it and replace it with this one
+rm gatk/4.2.0.0/README.md
+```
+
+```bash
+cd gatk/4.2.0.0/
 ## Ignore all downloaded/installed files
-ls -I "*libd*" >> .gitignore
+ls -I "README.md" >> .gitignore
 
 ## Version control files
 git add .gitignore
-git add README_libd.md
+git add README.md
 ```
 
 ```bash
