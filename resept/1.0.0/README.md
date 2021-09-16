@@ -21,6 +21,10 @@ git clone https://github.com/OSU-BMBL/RESEPT
 #  Install remaining python dependencies
 cd RESEPT
 python -m pip install -r requirements.txt
+
+#  Fix a couple system calls in the RESEPT code to allow invoking python
+#  scripts from outside the RESEPT directory
+sed -i 's/python -W ignore \(.*\)\.py/python -W ignore $(which \1.py)/' generate_embedding.py
 cd ..
 
 #  Exit virtual environment
