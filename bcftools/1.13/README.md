@@ -9,12 +9,17 @@ wget https://github.com/samtools/bcftools/releases/download/1.13/bcftools-1.13.t
     make && \
     make install
 
+wget http://software.broadinstitute.org/software/gtc2vcf/gtc2vcf_1.13-20211015.zip
+unzip gtc2vcf_1.13-20211015.zip
+mv *.so bcftools-1.13/plugins/
+
 ## Ignore all downloaded/installed files
 cd /jhpce/shared/jhpce/libd/bcftools/1.13
 echo "bcftools*" > .gitignore
 echo "bin" >> .gitignore
 echo "share" >> .gitignore
 echo "libexec" >> .gitignore
+echo "gtc2vcf*" >> .gitignore
 
 ## Set permissions
 chmod -R 775 .
