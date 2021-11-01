@@ -22,6 +22,10 @@ echo "tangram_env" >> .gitignore
 
 chmod -R 775 /jhpce/shared/jhpce/libd/tangram
 
+#  Remove write permissions on conda environment to prevent accidental 'pip' or
+#  'conda' commands from permanently changing the module for all users
+chmod -R 755 /jhpce/shared/jhpce/libd/tangram/1.0.0/tangram_env
+
 ## Version control files
 git add .gitignore
 git add README.md
