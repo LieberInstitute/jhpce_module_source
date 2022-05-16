@@ -22,7 +22,7 @@ conda deactivate
 echo "cellpose" > .gitignore
 echo "cellpose_env" >> .gitignore
 
-chmod -R 775 /jhpce/shared/jhpce/libd/cellpose/2.0
+chmod -R 775 /jhpce/shared/jhpce/libd/cellpose
 
 #  Remove write permissions on conda environment to prevent accidental 'pip' or
 #  'conda' commands from permanently changing the module for all users
