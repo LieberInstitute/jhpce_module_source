@@ -8,3 +8,4 @@ dependencies:
   - pip:
       - synapseclient
       - pyyaml
+      - pyhere

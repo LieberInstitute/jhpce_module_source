@@ -17,7 +17,8 @@ dependencies:
   - pandas
   - pip:
       - synapseclient
-      - pyyaml" > environment.yml
+      - pyyaml
+      - pyhere" > environment.yml
 
 #   Create a conda environment containing the python-based and command-line-
 #   based synapse client
