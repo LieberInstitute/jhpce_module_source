@@ -11,11 +11,15 @@ git clone git@github.com:MouseLand/cellpose.git
 #   Make sure not to rely on user packages
 export PYTHONNOUSERSITE="not_a_real_path"
 
-#  Create a conda environment as specified in the repo. Make sure pytorch is
+#   Create a conda environment as specified in the repo. Make sure pytorch is
 #   CUDA-aware for the version of CUDA on the caracol node (11.3)
 conda env create -f cellpose/environment.yml -p $PWD/cellpose_env
 conda activate $PWD/cellpose_env
 pip3 install torch==1.11.0+cu113 -f https://download.pytorch.org/whl/torch_stable.html
+
+#   Install many required and optional packages that are missing from the
+#   provided environment.yml file
+pip install pandas seaborn matplotlib scikit-image pyhere
 conda deactivate
 
 ## Ignore all downloaded/installed files
