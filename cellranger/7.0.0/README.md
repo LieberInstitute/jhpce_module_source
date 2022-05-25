@@ -4,16 +4,8 @@
 ## Commands used for installing the software
 #   Note: this uses a temporary download link generated after entering some
 #   information and agreeing to terms of use
-curl -o cellranger-7.0.0.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-7.0.0.tar.gz?Expires=1652929484&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1leHAvY2VsbHJhbmdlci03LjAuMC50YXIuZ3oiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2NTI5Mjk0ODR9fX1dfQ__&Signature=IAtiXAMSjUDmNjGOFLE3N2EwxQArvom3QAMWbcGDj4mVqT~v3GYPcozQYAbu8mtpP5eB8CzW5dn8nSE4EpIWrZLFAqme2sz7irCznvMzXsSUjeeIEST3xL03qQ3s78osaGI7-W2gjM21CW0e1KhIsUHA0Trwpw8nAfuyipa5tgTAi3TsOhI8MlhJq67IDt3wdzBAVCPrlhEQtA9q49R8t4x8bRXssmOzjoTgZ4rVmtwQF~mcEMdav8uq9nJNxi3vUSg266iyxzRL69iJ4fJWPcRDH08FlWLZ57nEy727Mk9-IYJfvvnHp2qzoIz7qT44opyI4cm0cm~nbo3aZ4ptFw__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
+curl -o cellranger-7.0.0.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-7.0.0.tar.gz?Expires=1653542926&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1leHAvY2VsbHJhbmdlci03LjAuMC50YXIuZ3oiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2NTM1NDI5MjZ9fX1dfQ__&Signature=EVttxJtsFhyK582kewiosKeA~thsZ8kPtWwKW7lHcaxU7rokmdJvjiMGYz3qD09Iwexqv-ip6QoVHQzoQuTTZQRCRqkHv4tySGSE42X2QyIS8pSOpWwO4NQNCx2hUs4zYbqdkT-mC7NG4lPttAaMJNilbeNg0~-BfMh-KzeGskTDI8Ze0FDbZNKB9bXV3pRYksCUPcZ3zNrJ4sgvOVUCbiMQXTrLdOJNSGzHHD3YuRVEY6so07hzYQQe1pzGji5O38jPPKgYTfBpLZxUmXnjjOrnC5r0SOzCPE662dN2aeQuoJo-Jfz0i4MSPN65X19L~zArFtCngoTLN7nW6Y1IaQ__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
 tar -xzf cellranger-7.0.0.tar.gz
-
-#   There was a missing shared object file at JHPCE resulting in a broken
-#   python package using the default installation. We'll create a conda
-#   environment to add the required dependency
-conda create -y -p $PWD/cellranger_env python=3.8.12
-conda activate $PWD/cellranger_env
-conda install -y -c bioconda libdeflate
-conda deactivate
 
 # A 10x-compatible reference genome is also required, and we install these as
 # needed from here:
@@ -24,12 +16,7 @@ conda deactivate
 
 ## Ignore all downloaded/installed files
 echo "cellranger-7.0.0*" > .gitignore
-echo "cellranger_env" >> .gitignore
-
-#   Allow relaxed permissions, but protect against changes to the conda
-#   environment
 chmod -R 775 .
-chmod -R 755 cellranger_env
 
 ## Version control files
 git add .gitignore
@@ -51,15 +38,16 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a   3) JHPCE_tools/1.0   5) gcc/4.4.7                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/17        4) sge/8.1.9         6) COMMUNITY_CENTOS7_DEFAULT_ENV   8) conda/3-4.6.14
+  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
+  2) stata/17          5) gcc/4.4.7
+  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
 
 $ date
-Tue May 24 17:02:41 EDT 2022
+Wed May 25 13:35:22 EDT 2022
 
 $ echo "User: ${USER}"
 User: neagles
 
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-058.cm.cluster
+Hostname: compute-105.cm.cluster
 ```
