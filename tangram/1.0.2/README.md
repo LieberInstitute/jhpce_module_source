@@ -3,6 +3,9 @@
 ```bash
 ## Commands used for installing the software
 
+#   Make sure not to rely on user packages
+export PYTHONNOUSERSITE="not_a_real_path"
+
 #  Clone the repo
 git clone git@github.com:broadinstitute/Tangram.git
 
@@ -18,14 +21,14 @@ pip install squidpy==1.1.0
 conda deactivate
 
 ## Ignore all downloaded/installed files
-echo "Tangram" >> .gitignore
+echo "Tangram" > .gitignore
 echo "tangram_env" >> .gitignore
 
 chmod -R 775 /jhpce/shared/jhpce/libd/tangram/1.0.2
 
 #  Remove write permissions on conda environment to prevent accidental 'pip' or
 #  'conda' commands from permanently changing the module for all users
-chmod -R 755 /jhpce/shared/jhpce/libd/tangram/1.0.2/tangram_env
+chmod -R 555 /jhpce/shared/jhpce/libd/tangram/1.0.2/tangram_env
 
 ## Version control files
 git add .gitignore
@@ -47,17 +50,16 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     5) gcc/4.4.7
-  2) stata/17          6) COMMUNITY_CENTOS7_DEFAULT_ENV
-  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
-  4) sge/8.1.9
+  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
+  2) stata/17          5) gcc/4.4.7
+  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
   
 $ date
-Wed Dec  8 11:14:58 EST 2021
+Wed Jun  1 12:42:45 EDT 2022
 
 $ echo "User: ${USER}"
 User: neagles
 
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-057.cm.cluster
+Hostname: compute-092.cm.cluster
 ```
