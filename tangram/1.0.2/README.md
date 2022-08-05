@@ -13,11 +13,13 @@ git clone git@github.com:broadinstitute/Tangram.git
 mkdir tangram_env
 conda env create -f Tangram/environment.yml -p $PWD/tangram_env
 
-#  Manually install tangram and an additional python package that we'll need
+#  Manually install tangram and some additional python packages that we'll need
 conda activate $PWD/tangram_env
 pip install pyhere
 pip install tangram-sc==1.0.2
 pip install squidpy==1.1.0
+pip install xlrd
+pip install openpyxl
 conda deactivate
 
 ## Ignore all downloaded/installed files
