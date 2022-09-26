@@ -1,6 +1,6 @@
 # JHPCE module source
 
-This repository contains the [module](https://lmod.readthedocs.io/) source files for modules contributed to [JHPCE](http://www.jhpce.jhu.edu/) by members of the Data Science team lead by [Andrew E. Jaffe](http://aejaffe.com/) at the [Lieber Institute for Brain Development](https://www.libd.org/).
+This repository contains the [module](https://lmod.readthedocs.io/) source files for modules contributed to [JHPCE](http://www.jhpce.jhu.edu/) by members of the [R/Bioconductor-powered Team Data Science](https://lcolladotor.github.io/bioc_team_ds) at the [Lieber Institute for Brain Development](https://www.libd.org/).
 
 The configuration files are hosted in the [jhpce_module_config](https://github.com/LieberInstitute/jhpce_module_config) GitHub repository.
 
