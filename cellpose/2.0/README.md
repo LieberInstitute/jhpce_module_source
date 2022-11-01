@@ -17,7 +17,7 @@ pip install cellpose 'cellpose[gui]'
 pip install torch==1.11.0+cu113 -f https://download.pytorch.org/whl/torch_stable.html
 
 #   Install more packages we'll need for cellpose-related analysis
-pip install seaborn matplotlib scikit-image pyhere scikit-learn pyyaml pandas openpyxl graphviz
+pip install seaborn matplotlib scikit-image pyhere scikit-learn pyyaml pandas openpyxl graphviz session_info
 
 #   More dependencies seemed to be necessary to install to enable the Qt-based
 #   GUI and plotting
