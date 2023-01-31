@@ -18,6 +18,11 @@ conda activate mamba_env
 #   Use mamba to create a conda environment 
 mamba env create -p loopy_env -f loopy-browser/environment.yml
 
+#   Add a couple python packages (pyhere, openpyxl)
+conda activate ./loopy_env
+pip install pyhere openpyxl
+conda deactivate
+
 ## Ignore all downloaded/installed files
 echo "loopy-browser" > .gitignore
 echo "loopy_env" >> .gitignore
