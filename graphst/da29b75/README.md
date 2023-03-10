@@ -24,7 +24,7 @@ pip install torch==1.11.0+cu113 -f https://download.pytorch.org/whl/torch_stable
 
 #   GraphST and additional dependencies
 pip install GraphST
-pip install numpy pandas scikit-learn scanpy pot
+pip install numpy pandas scikit-learn scanpy pot scikit-misc
 
 conda deactivate
 
@@ -33,9 +33,9 @@ echo "graphst_env" > .gitignore
 
 chmod -R 775 /jhpce/shared/jhpce/libd/graphst
 
-#  Remove write permissions on conda environment to prevent accidental 'pip' or
-#  'conda' commands from permanently changing the module for all users
-chmod -R 755 /jhpce/shared/jhpce/libd/graphst/da29b75/graphst_env
+#  For now, allow anyone to modify the conda environment (to allow
+#  'pip install' if a python package is missing)
+chmod -R 777 /jhpce/shared/jhpce/libd/graphst/da29b75/graphst_env
 
 ## Version control files
 git add .gitignore
