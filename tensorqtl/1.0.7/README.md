@@ -4,9 +4,9 @@
 ## Commands used for installing the software
 
 #  Create and enter a python virtual environment (we'll actually need R and
-#  some system utilities made available through conda_R/4.2.x). Note that we're
+#  some system utilities made available through conda_R/4.1.x). Note that we're
 #  on the 'caracol' node!
-module load conda_R/4.2.x
+module load conda_R/4.1.x
 python -m venv ./tensorqtl_venv
 source tensorqtl_venv/bin/activate
 
@@ -55,13 +55,13 @@ $ module list
 
 Currently Loaded Modules:
   1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/17          5) gcc/4.4.7                       8) conda/3-4.11.0
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV   9) conda_R/4.2.x
+  2) stata/17          5) gcc/4.4.7                       8) conda/3-4.6.14
+  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV   9) conda_R/4.1.x
 
 
 
 $ date
-Wed Mar 22 16:16:25 EDT 2023
+Fri Mar 24 15:37:57 EDT 2023
 
 $ echo "User: ${USER}"
 User: neagles
