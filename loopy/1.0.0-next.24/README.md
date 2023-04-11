@@ -31,6 +31,17 @@ echo "samui*" > .gitignore
 chmod 775 -R .
 chmod 755 -R samui_env
 
+#   Later, update to version 1.0.0-next.24. The 'environment.yml' file hasn't
+#   changed, so we can simply update the Samui-related files without needing
+#   to update the conda environment
+rm -r samui
+wget https://github.com/chaichontat/samui/archive/refs/tags/v1.0.0-next.24.tar.gz
+tar -xzf v1.0.0-next.24.tar.gz
+rm v1.0.0-next.24.tar.gz
+mv samui-1.0.0-next.24 samui
+
+chmod 775 -R samui
+
 ## Version control files
 git add .gitignore
 git add README.md
