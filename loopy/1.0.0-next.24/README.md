@@ -20,7 +20,7 @@ mamba env create -p samui_env -f samui/environment.yml
 
 #   Add a couple python packages (pyhere, openpyxl)
 conda activate ./samui_env
-pip install pyhere openpyxl
+pip install pyhere openpyxl lxml
 conda deactivate
 
 ## Ignore all downloaded/installed files
