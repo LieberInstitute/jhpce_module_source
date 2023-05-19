@@ -22,8 +22,8 @@ python -m pip install -r paste-1.3.0/requirements.txt
 python -m pip install paste-bio
 
 ## Ignore all downloaded/installed files
-echo paste* > .gitignore
-echo v1.3.0.tar.gz >> .gitignore
+echo "paste*" > .gitignore
+echo "v1.3.0.tar.gz" >> .gitignore
 
 # Set permissions (protect against accidental changes to virtual env)
 chmod -R 775 /jhpce/shared/jhpce/libd/paste
