@@ -18,9 +18,9 @@ conda activate mamba_env
 #   Use mamba to create a conda environment 
 mamba env create -p samui_env -f samui/environment.yml
 
-#   Add a couple python packages (pyhere, openpyxl)
+#   Add a couple python packages
 conda activate ./samui_env
-pip install pyhere openpyxl lxml
+pip install pyhere openpyxl lxml pypng
 conda deactivate
 
 ## Ignore all downloaded/installed files
