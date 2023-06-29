@@ -14,31 +14,31 @@ See the [jhpce_module_config](https://github.com/LieberInstitute/jhpce_module_co
 
 # Create a new module
 
-__Step 1.__ Create a directory in lowercase with the name of the source you are installing. In this example, we'll install [`HISAT2`](https://ccb.jhu.edu/software/hisat2/index.shtml) version [2.0.4](ftp://ftp.ccb.jhu.edu/pub/infphilo/hisat2/downloads/hisat2-2.0.4-Linux_x86_64.zip).
+__Step 1.__ Create a directory in lowercase with the name of the source you are installing. In this example, we'll install [`HISAT2`](https://daehwankimlab.github.io/hisat2/) version [2.2.1](https://github.com/DaehwanKimLab/hisat2/archive/refs/tags/v2.2.1.tar.gz).
 
 ```bash
 mkdir hisat2
 ```
 
-__Step 2.__ Create a nested directory with the version number of the software you are installing. In this example, that would be `2.0.4`.
+__Step 2.__ Create a nested directory with the version number of the software you are installing. In this example, that would be `2.2.1`.
 
 ```bash
-mkdir hisat2/2.0.4
+mkdir hisat2/2.2.1
 ```
 
 __Step 3.__ Copy and rename the [template README.md](README_template.md)
 
 ```bash
-cp README_template.md hisat2/2.0.4/README.md
+cp README_template.md hisat2/2.2.1/README.md
 ```
 
-__Step 4.__ Edit the template README.md in the new directory and install the software. Make sure that any information for reproducing the installation process is documented. As an example, check the [hisat2/2.0.4/README.md](hisat2/2.0.4/README.md) file.
+__Step 4.__ Edit the template README.md in the new directory and install the software. Make sure that any information for reproducing the installation process is documented. As an example, check the [hisat2/2.2.1/README.md](hisat2/2.2.1/README.md) file.
 
 __Step 5.__ Make sure that the permissions are set correctly at the end.
 
 ```bash
 ## Use 7 for group: so Nick and Leo can edit the files
-chmod 775 -R hisat2/2.0.4/
+chmod 775 -R hisat2/2.2.1/
 ```
 
 
