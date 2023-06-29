@@ -10,7 +10,7 @@ cd ruby-3.2.2
 # ---
 # Configuration summary for ruby version 3.2.2
 # 
-#    * Installation prefix: /jhpce/shared/jhpce/libd/ruby/3.2.2/rubyinstall
+#    * Installation prefix: /jhpce/shared/libd/core/ruby/3.2.2/rubyinstall
 #    * exec prefix:         ${prefix}
 #    * arch:                x86_64-linux
 #    * site arch:           ${arch}
@@ -29,12 +29,13 @@ cd ruby-3.2.2
 #    * DLDFLAGS:            -Wl,--compress-debug-sections=zlib
 #    * optflags:            -O3 -fno-fast-math
 #    * debugflags:          -ggdb3
-#    * warnflags:           -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration \
-#                           -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wold-style-definition \
-#                           -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand \
-#                           -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat \
-#                           -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter \
-#                           -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wundef
+#    * warnflags:           -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond \
+#                           -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith \
+#                           -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn \
+#                           -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers \
+#                           -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign \
+#                           -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format \
+#                           -Wsuggest-attribute=noreturn -Wunused-variable -Wundef
 #    * strip command:       strip -S -x
 #    * install doc:         rdoc
 #    * MJIT support:        yes
