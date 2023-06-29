@@ -75,7 +75,7 @@ Currently Loaded Modules:
   1) JHPCE_tools/3.0
 
 $ date
-Thu Jun 29 03:54:10 PM EDT 2023
+Thu Jun 29 05:59:33 PM EDT 2023
 $ echo "User: ${USER}"
 User: lcollado
 $ echo "Hostname: ${HOSTNAME}"
