@@ -6,7 +6,7 @@ wget https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.2.tar.gz
 tar xvfz ruby-3.2.2.tar.gz
 mkdir rubyinstall
 cd ruby-3.2.2
-./configure --prefix=/jhpce/shared/jhpce/libd/ruby/3.2.2/rubyinstall
+./configure --prefix=/jhpce/shared/libd/core/ruby/3.2.2/rubyinstall
 # ---
 # Configuration summary for ruby version 3.2.2
 # 
