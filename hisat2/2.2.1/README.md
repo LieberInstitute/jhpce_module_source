@@ -34,17 +34,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     5) gcc/4.4.7
-  2) stata/16          6) COMMUNITY_CENTOS7_DEFAULT_ENV
-  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
-  4) sge/8.1.9         8) conda/3-4.6.14
+  1) JHPCE_tools/3.0
+
+ 
 
 $ date
-Mon Aug 24 15:42:52 EDT 2020
-
+Thu Jun 29 03:05:22 PM EDT 2023
 $ echo "User: ${USER}"
-User: neagles
-
+User: lcollado
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-116.cm.cluster
+Hostname: compute-094.cm.cluster
 ```
