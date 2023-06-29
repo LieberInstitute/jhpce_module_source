@@ -2,12 +2,11 @@
 
 ```bash
 ## Commands used for installing the software
-module unload conda_R
 wget https://github.com/pachterlab/kallisto/releases/download/v0.46.1/kallisto_linux-v0.46.1.tar.gz
 tar xzvf kallisto_linux-v0.46.1.tar.gz
 
 ## Ignore all downloaded/installed files
-echo "kallisto*" >> .gitignore
+echo "kallisto*" > .gitignore
 
 ## Version control files
 git add .gitignore
@@ -29,16 +28,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV  10) git-lfs/2.8.0   13) conda/3-4.6.14
-  2) stata/16          5) gcc/4.4.7                       8) git-status-size/github     11) ruby/2.6.4p104
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV   9) git/2.23.0                 12) rmate/1.5.9
+  1) JHPCE_tools/3.0
 
 
 
 $ date
-Fri Dec  6 13:28:44 EST 2019
+Thu Jun 29 04:30:54 PM EDT 2023
 $ echo "User: ${USER}"
-User: lcollado
+User: neagles
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-110.cm.cluster
+Hostname: compute-094.cm.cluster
 ```
