@@ -6,6 +6,7 @@ module load conda/3-23.3.1
 
 conda create -y -p $PWD/wiggle_env -c bioconda wiggletools
 echo wiggle_env > .gitignore
+chmod 775 -R .
 
 ## Version control files
 git add .gitignore
