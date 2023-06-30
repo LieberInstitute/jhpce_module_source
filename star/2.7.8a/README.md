@@ -7,9 +7,10 @@ tar -xzf 2.7.8a.tar.gz
 cd STAR-2.7.8a/source
 make
 cd ../..
+chmod -R 775 .
 
 ## Ignore all downloaded/installed files
-echo "*2.7.8a*" >> .gitignore
+echo "*2.7.8a*" > .gitignore
 
 ## Version control files
 git add .gitignore
@@ -31,15 +32,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     5) gcc/4.4.7
-  2) stata/16          6) COMMUNITY_CENTOS7_DEFAULT_ENV
-  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
-  4) sge/8.1.9
+  1) JHPCE_tools/3.0
+
+ 
 
 $ date
-Thu Mar 11 14:29:26 EST 2021
+Fri Jun 30 10:42:46 AM EDT 2023
 $ echo "User: ${USER}"
 User: neagles
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-079.cm.cluster
+Hostname: compute-094.cm.cluster
 ```
