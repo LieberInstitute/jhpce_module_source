@@ -2,7 +2,6 @@
 
 ```bash
 ## Commands used for installing the software
-module unload conda_R
 wget https://github.com/gpertea/regtools/archive/refs/tags/0.5.33g.tar.gz
 tar -xf 0.5.33g.tar.gz
 cd regtools-0.5.33g
@@ -11,6 +10,7 @@ cd build
 cmake ..
 make
 cd ../..
+chmod 775 -R .
 
 ## Ignore all downloaded/installed files
 echo "regtools-0.5.33g" > .gitignore
@@ -35,16 +35,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/17          5) gcc/4.4.7
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  1) JHPCE_tools/3.0
 
-
+ 
 
 $ date
-Tue Dec 28 11:41:17 EST 2021
+Thu Jul  6 03:50:57 PM EDT 2023
 $ echo "User: ${USER}"
 User: neagles
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-120.cm.cluster
+Hostname: compute-111.cm.cluster
 ```
