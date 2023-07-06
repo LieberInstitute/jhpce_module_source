@@ -2,29 +2,29 @@
 
 ```bash
 ## Commands used for installing the software
-module load python/3.7.3
+
+#   Make sure not to rely on user packages
+export PYTHONNOUSERSITE="not_a_real_path"
+
+#   Create a conda environment containing python, the RSeQC package, and its
+#   dependencies
+conda create -y -p $PWD/rseqc_env python=3.7.3
+conda activate $PWD/rseqc_env
+pip install RSeQC==3.0.1
+conda deactivate
+
+#   Download the RSeQC python scripts
 wget https://downloads.sourceforge.net/project/rseqc/RSeQC-3.0.1.tar.gz
 tar zxf RSeQC-3.0.1.tar.gz
-cd RSeQC-3.0.1
-python setup.py install --root=bin
 
-#install required dependencies by downloading source packages from git or pip download
-#then point them to our RSeQC root directory
-cd /jhpce/shared/jhpce/libd/rseqc/3.0.1/RSeQC-3.0.1/
-#bx-python-master.zip
-unzip bx-python-master.zip
-cd bx-python-master
-python setup.py install --root=/jhpce/shared/jhpce/libd/rseqc/3.0.1/RSeQC-3.0.1/bin
-
-cd /jhpce/shared/jhpce/libd/rseqc/3.0.1/RSeQC-3.0.1/
-#pysam-0.15.3.tar.gz
-tar zxf pysam-0.15.3.tar.gz
-cd pysam-0.15.3
-python setup.py install --root=/jhpce/shared/jhpce/libd/rseqc/3.0.1/RSeQC-3.0.1/bin
+#  Allow fairly relaxed permissions, but protect against accidental changes to
+#  the conda environment
+chmod 775 -R .
+chmod 555 -R rseqc_env
 
 ## Ignore all downloaded/installed files
-cd /jhpce/shared/jhpce/libd/rseqc/3.0.1
-echo "RSeQC-3.0.1*" > .gitignore
+echo "rseqc_env" > .gitignore
+echo "RSeQC-3.0.1*" >> .gitignore
 
 ## Version control files
 git add .gitignore
@@ -45,12 +45,12 @@ echo "Hostname: ${HOSTNAME}"
 ## copy paste the output from the previous commands
 
 Currently Loaded Modules:
-  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/16          5) gcc/4.4.7                       8) python/3.7.3
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  1) JHPCE_tools/3.0
 
-Sat Dec  7 21:55:59 EST 2019
-User: bbarry
-Hostname: compute-082.cm.cluster
+ 
+
+Thu Jul  6 04:38:37 PM EDT 2023
+User: neagles
+Hostname: compute-111.cm.cluster
 ```
 
