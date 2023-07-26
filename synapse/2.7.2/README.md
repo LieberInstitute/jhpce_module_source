@@ -24,13 +24,19 @@ dependencies:
 #   based synapse client
 conda env create -f environment.yml -p $PWD/synapse_env
 
+# Later, update to synapseclient==2.7.2
+conda activate $PWD/synapse_env
+pip install --upgrade synapseclient==2.7.2
+pip install pysftp
+conda deactivate
+
 ## Ignore all downloaded/installed files
 echo "synapse_env" >> .gitignore
 
 #  Allow fairly relaxed permissions, but protect against accidental changes to
 #  the conda environment
 chmod -R 775 /jhpce/shared/jhpce/libd/synapse
-chmod -R 755 /jhpce/shared/jhpce/libd/synapse/2.6.0/synapse_env
+chmod -R 555 /jhpce/shared/jhpce/libd/synapse/2.7.2/synapse_env
 
 ## Version control files
 git add .gitignore
