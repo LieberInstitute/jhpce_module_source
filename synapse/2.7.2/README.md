@@ -14,9 +14,10 @@ echo "channels:
 dependencies:
   - python = 3.10.4
   - pip
-  - pandas
   - pip:
-      - synapseclient
+      - synapseclient == 2.7.2
+      - pandas
+      - pysftp
       - pyyaml
       - pyhere" > environment.yml
 
@@ -24,19 +25,13 @@ dependencies:
 #   based synapse client
 conda env create -f environment.yml -p $PWD/synapse_env
 
-# Later, update to synapseclient==2.7.2
-conda activate $PWD/synapse_env
-pip install --upgrade synapseclient==2.7.2
-pip install pysftp
-conda deactivate
-
 ## Ignore all downloaded/installed files
-echo "synapse_env" >> .gitignore
+echo "synapse_env" > .gitignore
 
 #  Allow fairly relaxed permissions, but protect against accidental changes to
 #  the conda environment
-chmod -R 775 /jhpce/shared/jhpce/libd/synapse
-chmod -R 555 /jhpce/shared/jhpce/libd/synapse/2.7.2/synapse_env
+chmod -R 775 .
+chmod -R 555 synapse_env
 
 ## Version control files
 git add .gitignore
@@ -59,18 +54,17 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/17          5) gcc/4.4.7
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  1) matlab/R2019a   3) JHPCE_tools/1.0   5) gcc/4.4.7                       7) JHPCE_CENTOS7_DEFAULT_ENV
+  2) stata/17        4) sge/8.1.9         6) COMMUNITY_CENTOS7_DEFAULT_ENV
 
-
+ 
 
 $ date
-Thu May  5 14:38:05 EDT 2022
+Wed Jul 26 13:51:47 EDT 2023
 
 $ echo "User: ${USER}"
 User: neagles
 
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-106.cm.cluster
+Hostname: compute-124.cm.cluster
 ```
