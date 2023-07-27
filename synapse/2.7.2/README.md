@@ -14,9 +14,10 @@ echo "channels:
 dependencies:
   - python = 3.10.4
   - pip
-  - pandas
   - pip:
-      - synapseclient
+      - synapseclient == 2.7.2
+      - pandas
+      - pysftp
       - pyyaml
       - pyhere" > environment.yml
 
@@ -25,12 +26,12 @@ dependencies:
 conda env create -f environment.yml -p $PWD/synapse_env
 
 ## Ignore all downloaded/installed files
-echo "synapse_env" >> .gitignore
+echo "synapse_env" > .gitignore
 
 #  Allow fairly relaxed permissions, but protect against accidental changes to
 #  the conda environment
-chmod -R 775 /jhpce/shared/jhpce/libd/synapse
-chmod -R 755 /jhpce/shared/jhpce/libd/synapse/2.6.0/synapse_env
+chmod -R 775 .
+chmod -R 555 synapse_env
 
 ## Version control files
 git add .gitignore
@@ -53,18 +54,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/17          5) gcc/4.4.7
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  1) JHPCE_ROCKY9_DEFAULT_ENV   2) JHPCE_tools/3.0
 
-
+ 
 
 $ date
-Thu May  5 14:38:05 EDT 2022
-
+Thu Jul 27 01:12:54 PM EDT 2023
 $ echo "User: ${USER}"
 User: neagles
-
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-106.cm.cluster
+Hostname: compute-094.cm.cluster
 ```
