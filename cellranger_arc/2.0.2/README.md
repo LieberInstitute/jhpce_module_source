@@ -4,7 +4,7 @@
 ## Commands used for installing the software
 #   Note: this uses a temporary download link generated after entering some
 #   information and agreeing to terms of use
-curl -o cellranger-arc-2.0.2.tar.gz "https://cf.10xgenomics.com/releases/cell-arc/cellranger-arc-2.0.2.tar.gz?Expires=1663730883&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1hcmMvY2VsbHJhbmdlci1hcmMtMi4wLjIudGFyLmd6IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjYzNzMwODgzfX19XX0_&Signature=CnZe7awGSEVeyzYH5Qy9p4tJpxBOzf~D6~Rx64QqkuXICYXrBRbR1aPP-4bKVr3NRAHSdxbydlz-X57uwF0WxUqr~ptfD2oudyPmwJ6LmScmpLTZeTPnOUDP5E6vgrLFYHQ3Kg2vwrGoPlnRPrNmckqIEm5O5qWXmCm27Jl6-FzpVbwcdvCdGxD8znOpxewKST6qOQkc0zabOnLru2CsEbDIWx24wvlg7a2zpedTjEL4xRjvaG5lxGQK9EzzGgDcMMedZrCbO7xiQT-Z5nKaxuYSXFCsxPFniOpqHR0BbwiWip6nD4CjccJPUzOssNH6lu573TqVbnMinYoWWnms~g__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
+curl -o cellranger-arc-2.0.2.tar.gz "https://cf.10xgenomics.com/releases/cell-arc/cellranger-arc-2.0.2.tar.gz?Expires=1690618330&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1hcmMvY2VsbHJhbmdlci1hcmMtMi4wLjIudGFyLmd6IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjkwNjE4MzMwfX19XX0_&Signature=aaDbOZHvlDy0Wbt9VmBstAlulzq5dthOkbTeIp-u9h5tFC38HUzAbx28E4Swxr9R~KsyDTIvE-iazJY4qDLclyV~1kdB~ysr7fXZQxA5iBJpAt2stJE7ZBFfPmv9rofX08MAzaRNSlEElvlplqBje4cTNRyjWFZ2Zi8UFOIMK7gfzY8rpeiFfD7K3MudsgOhjcmYQJydMCmBmPOviCXoTX7qIO~AWSYv4uBfWfkS-cG61XKzCWaskJZTgM-zT2E2~p34~XVaqtZB6WXpE4n4T83rBCvGoDDSZ~kqs6fH3P8DMtH4EGjWvBjPMf3V~0YSspzTlqNppgRcPyCLQV7N5w__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
 tar -xzf cellranger-arc-2.0.2.tar.gz
 
 # A 10x-compatible reference genome is also required, and we install these as
@@ -16,7 +16,7 @@ tar -xzf cellranger-arc-2.0.2.tar.gz
 
 ## Ignore all downloaded/installed files
 echo "cellranger-arc-2.0.2*" > .gitignore
-chmod -R 775 /jhpce/shared/jhpce/libd/cellranger_arc
+chmod -R 775 .
 
 ## Version control files
 git add .gitignore
@@ -38,16 +38,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/17          5) gcc/4.4.7
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  1) JHPCE_ROCKY9_DEFAULT_ENV   2) JHPCE_tools/3.0   3) conda/3-23.3.1
+
+ 
 
 $ date
-Tue Sep 20 11:38:36 EDT 2022
-
+Fri Jul 28 04:20:04 PM EDT 2023
 $ echo "User: ${USER}"
 User: neagles
-
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-141.cm.cluster
+Hostname: compute-111.cm.cluster
 ```
