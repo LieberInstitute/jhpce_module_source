@@ -18,7 +18,7 @@ git add README.md
 module list
 date
 echo "User: ${USER}"
-echo "Hostname: ${HOSTNAME}"
+echo "Node name: ${SLURMD_NODENAME}"
 ```
 
 ```bash
