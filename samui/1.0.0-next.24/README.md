@@ -3,44 +3,26 @@
 ```bash
 ## Commands used for installing the software
 
-#   Pull Samui v1.0.0-next.15
-wget https://github.com/chaichontat/samui/archive/refs/tags/v1.0.0-next.15.tar.gz
-tar -xzf v1.0.0-next.15.tar.gz
-rm v1.0.0-next.15.tar.gz
-mv samui-1.0.0-next.15 samui
-
-#   Create a small environment including mamba, since conda is
-#   prohibitively slow when trying to create an environment directly with all
-#   the loopy dependencies
-conda create -y -n mamba_env -c conda-forge mamba
-conda activate mamba_env
-
-#   Use mamba to create a conda environment 
-mamba env create -p samui_env -f samui/environment.yml
-
-#   Add a couple python packages
-conda activate ./samui_env
-pip install pyhere openpyxl lxml pypng
-conda deactivate
-
-## Ignore all downloaded/installed files
-echo "samui*" > .gitignore
-
-#   Set loose permissions, except don't allow writing that could corrupt the
-#   conda environment for everyone
-chmod 775 -R .
-chmod 755 -R samui_env
-
-#   Later, update to version 1.0.0-next.24. The 'environment.yml' file hasn't
-#   changed, so we can simply update the Samui-related files without needing
-#   to update the conda environment
-rm -r samui
 wget https://github.com/chaichontat/samui/archive/refs/tags/v1.0.0-next.24.tar.gz
 tar -xzf v1.0.0-next.24.tar.gz
 rm v1.0.0-next.24.tar.gz
 mv samui-1.0.0-next.24 samui
 
-chmod 775 -R samui
+conda env create -p samui_env -f samui/environment.yml
+
+#   Add a couple python packages
+conda activate ./samui_env
+pip install pyhere openpyxl lxml pypng session-info
+conda deactivate
+
+## Ignore all downloaded/installed files
+echo samui > .gitignore
+echo samui_env >> .gitignore
+
+#   Set loose permissions, except don't allow writing that could corrupt the
+#   conda environment for everyone
+chmod 775 -R .
+chmod 555 -R samui_env
 
 ## Version control files
 git add .gitignore
@@ -54,7 +36,7 @@ git add README.md
 module list
 date
 echo "User: ${USER}"
-echo "Hostname: ${HOSTNAME}"
+echo "Hostname: ${SLURMD_NODENAME}"
 ```
 
 ```bash
@@ -62,14 +44,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/17          5) gcc/4.4.7
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  1) JHPCE_tools/3.0
+
+ 
 
 $ date
-Fri Feb 17 15:04:59 EST 2023
+Tue Aug 22 10:44:43 AM EDT 2023
 $ echo "User: ${USER}"
 User: neagles
-$ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-124.cm.cluster
+$ echo "Hostname: ${SLURMD_NODENAME}"
+Hostname: compute-111
 ```
