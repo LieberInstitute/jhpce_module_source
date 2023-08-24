@@ -10,9 +10,11 @@ module load conda_R/4.3
 python -m venv ./tensorqtl_venv
 source tensorqtl_venv/bin/activate
 
-#  Upgrade pip and install CUDA-aware pytorch
+#  Upgrade pip and install CUDA-aware pytorch. Also add packages I frequently
+#  use
 python -m pip install --upgrade pip
 python -m pip install torch==1.11.0+cu113 -f https://download.pytorch.org/whl/torch_stable.html
+pip install session-info pyhere
 
 #  Install tensorQTL 1.0.8 (The git repo doesn't have a 1.0.8 release yet, so
 #  we'll clone the latest commit)
@@ -34,7 +36,7 @@ echo "tensorqtl*" > .gitignore
 #  Allow fairly relaxed permissions, but protect against accidental changes to
 #  the virtual environment
 chmod -R 775 /jhpce/shared/jhpce/libd/tensorqtl/1.0.8
-chmod -R 755 /jhpce/shared/jhpce/libd/tensorqtl/1.0.8/tensorqtl_venv
+chmod -R 555 /jhpce/shared/jhpce/libd/tensorqtl/1.0.8/tensorqtl_venv
 
 ## Version control files
 git add .gitignore
