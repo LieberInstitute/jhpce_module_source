@@ -4,20 +4,17 @@
 ## Commands used for installing the software
 wget https://github.com/FelixKrueger/TrimGalore/archive/refs/tags/0.6.6.tar.gz
 tar -xzf 0.6.6.tar.gz
+rm 0.6.6.tar.gz
 
-#  Create a python virtual environment with cutadapt 3.4 installed inside
-module load python/3.7.3
-mkdir cutadapt
-BASE=$PWD/cutadapt
-virtualenv $BASE/venv
-$BASE/venv/bin/pip install -I --prefix=$BASE/bin cutadapt
+# Install cutadapt 4.0 with conda
+source /jhpce/shared/jhpce/core/conda/miniconda3-23.3.1/etc/profile.d/conda.sh
+conda create -y -p ./cutadapt_env cutadapt==4.0
 
 ## Ignore all downloaded/installed files
-echo "TrimGalore-0.6.6" >> .gitignore
-echo "cutadapt" >> .gitignore
-echo "0.6.6.tar.gz" >> .gitignore
+echo "TrimGalore-0.6.6" > .gitignore
+echo "cutadapt_env" >> .gitignore
 
-chmod -R 775 /jhpce/shared/jhpce/libd/trimgalore
+chmod -R 775 .
 
 ## Version control files
 git add .gitignore
@@ -31,7 +28,7 @@ git add README.md
 module list
 date
 echo "User: ${USER}"
-echo "Hostname: ${HOSTNAME}"
+echo "Node name: ${SLURMD_NODENAME}"
 ```
 
 ```bash
@@ -39,17 +36,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     5) gcc/4.4.7
-  2) stata/16          6) COMMUNITY_CENTOS7_DEFAULT_ENV
-  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
-  4) sge/8.1.9         8) python/3.7.3
+  1) JHPCE_tools/3.0
+
+ 
 
 $ date
-Tue Mar 30 13:56:08 EDT 2021
-
+Mon Aug 28 02:16:26 PM EDT 2023
 $ echo "User: ${USER}"
 User: neagles
-
-$ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-075.cm.cluster
+$ echo "Node name: ${SLURMD_NODENAME}"
+Node name: compute-113
 ```
