@@ -4,12 +4,13 @@
 ## Commands used for installing the software
 curl -O https://ctg.cncr.nl/software/MAGMA/prog/magma_v1.10_static.zip
 unzip magma_v1.10_static.zip
+rm magma_v1.10_static.zip
 
 echo "magma*" > .gitignore
 echo "README" >> .gitignore
 echo "CHANGELOG" >> .gitignore
 echo "manual*.pdf" >> .gitignore
-chmod -R 775 ..
+chmod -R 775 .
 
 ## Version control files
 git add .gitignore
@@ -23,7 +24,7 @@ git add README.md
 module list
 date
 echo "User: ${USER}"
-echo "Hostname: ${HOSTNAME}"
+echo "Node name: ${SLURMD_NODENAME}"
 ```
 
 ```bash
@@ -31,16 +32,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     4) sge/8.1.9                       7) JHPCE_CENTOS7_DEFAULT_ENV
-  2) stata/17          5) gcc/4.4.7
-  3) JHPCE_tools/1.0   6) COMMUNITY_CENTOS7_DEFAULT_ENV
+  1) JHPCE_tools/3.0   2) conda/3-23.3.1
+
+ 
 
 $ date
-Fri May 27 14:41:30 EDT 2022
-
+Thu Aug 31 11:45:36 AM EDT 2023
 $ echo "User: ${USER}"
 User: neagles
-
-$ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-107.cm.cluster
+$ echo "Node name: ${SLURMD_NODENAME}"
+Node name: compute-098
 ```
