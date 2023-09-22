@@ -8,6 +8,7 @@ export PYTHONNOUSERSITE="not_a_real_path"
 
 #   Create a conda environment containing python, the RSeQC package, and its
 #   dependencies
+source /jhpce/shared/jhpce/core/conda/miniconda3-23.3.1/etc/profile.d/conda.sh
 conda create -y -p $PWD/rseqc_env python=3.7.3
 conda activate $PWD/rseqc_env
 pip install RSeQC==3.0.1
@@ -16,6 +17,7 @@ conda deactivate
 #   Download the RSeQC python scripts
 wget https://downloads.sourceforge.net/project/rseqc/RSeQC-3.0.1.tar.gz
 tar zxf RSeQC-3.0.1.tar.gz
+rm RSeQC-3.0.1.tar.gz
 
 #  Allow fairly relaxed permissions, but protect against accidental changes to
 #  the conda environment
