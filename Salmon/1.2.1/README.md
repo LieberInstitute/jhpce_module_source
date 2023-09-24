@@ -2,9 +2,9 @@
 
 ```bash
 ## Commands used for installing the software
-wget https://github.com/COMBINE-lab/salmon/releases/download/v1.2.1/Salmon-1.2.1_linux_x86_64.tar.gz
-tar xzvf Salmon-1.2.1_*.tar.gz
-rm Salmon-1.2.1_*.tar.gz
+wget https://github.com/COMBINE-lab/salmon/releases/download/v1.2.1/salmon-1.2.1_linux_x86_64.tar.gz
+tar xzvf salmon-1.2.1_*.tar.gz
+rm salmon-1.2.1_*.tar.gz
 chmod -R 775 .
 
 ## Ignore all downloaded/installed files
