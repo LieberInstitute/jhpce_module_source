@@ -29,9 +29,13 @@ rm -rf tmp
 chmod -R g+rwX .
 
 ## edit the lua file and copy it to the proper lmod directory to enable the module
-## check this path, in case it changes
-MODLUA=/jhpce/shared/libd/modulefiles 
+## Deployment:
+MODLUA=/jhpce/shared/libd/modulefiles
+if [[ ! -d $MODLUA/Salmon ]]; 
+  mkdir -p $MODLUA/Salmon
+fi
 cp $ver.lua $MODLUA/Salmon/
+
 ## Ignore all installed files (including Boost headers and libs)
 echo -e "bin/\nlib/\ninclude/\n" > .gitignore
 
