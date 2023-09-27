@@ -36,8 +36,8 @@ git add .gitignore README.md $ver.lua
 ## Deployment:
 chmod a+rx $ver.lua
 mkdir -p $MODLUA/$MOD
+chmod a+rx $MODLUA/$MOD
 cp $ver.lua $MODLUA/$MOD/
-
 ```
 
 # Reproducibility
