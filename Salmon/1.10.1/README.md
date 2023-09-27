@@ -36,7 +36,7 @@ git add .gitignore README.md $ver.lua
 ## Deployment:
 chmod a+rx $ver.lua
 mkdir -p $MODLUA/$MOD
-cp $ver.lua $MODLUA/Salmon/
+cp $ver.lua $MODLUA/$MOD/
 
 ```
 
