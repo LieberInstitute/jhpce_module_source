@@ -4,8 +4,10 @@
 ## Commands used for installing/building the software
 ## building on Rocky 9 requires Boost 1.82, linked statically
 ## no conda module/env should be loaded, environment should be clean (default OS compiler)
-SW=$(pwd -P) # current module source directory is the install prefix 
+MODLUA=/jhpce/shared/libd/modulefiles 
+MOD=Salmon
 ver=1.10.1
+SW=$(pwd -P) # current module source directory is the install prefix
 mkdir tmp && cd tmp
 wget -qO- https://github.com/COMBINE-lab/salmon/archive/refs/tags/v${ver}.tar.gz | tar -xvzf -
 wget -qO- https://boostorg.jfrog.io/artifactory/main/release/1.82.0/source/boost_1_82_0.tar.bz2 | tar -xvjf - 
@@ -21,26 +23,21 @@ mkdir build; cd build
 cmake -DNO_IPO=TRUE -DFETCH_STADEN=TRUE -DBOOST_ROOT=$SW -DCMAKE_INSTALL_PREFIX=$SW ..
 make -j4
 make install
-
 ## cleanup
 ##
 cd $SW
 rm -rf tmp
 chmod -R g+rwX .
-
-## edit the lua file and copy it to the proper lmod directory to enable the module
-## Deployment:
-MODLUA=/jhpce/shared/libd/modulefiles
-if [[ ! -d $MODLUA/Salmon ]]; 
-  mkdir -p $MODLUA/Salmon
-fi
-cp $ver.lua $MODLUA/Salmon/
-
-## Ignore all installed files (including Boost headers and libs)
+## .gitignore prep: ignore installed files (including Boost libs and headers)
 echo -e "bin/\nlib/\ninclude/\n" > .gitignore
-
-## Version control files
+## Copy/create/edit the lua file: $ver.lua
+## version control files
 git add .gitignore README.md $ver.lua
+## Deployment:
+chmod a+rx $ver.lua
+mkdir -p $MODLUA/$MOD
+chmod a+rx $MODLUA/$MOD
+cp $ver.lua $MODLUA/$MOD/
 ```
 
 # Reproducibility
