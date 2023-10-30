@@ -4,14 +4,16 @@
 ## Commands used for installing the software
 
 MODSRC=/jhpce/shared/libd/core
-VER='22.10.7'
-wget -O nextflow https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
-mkdir -p $MODSRC/nextflow/$VER
-mv nextflow $MODSRC/nextflow/$VER
+VER='17'
+mkdir -p $MODSRC/java
+cd $MODSRC/java
+wget -O- https://download.oracle.com/java/17/archive/jdk-17.0.9_linux-x64_bin.tar.gz | tar xvzf -
+mv jdk-17.0.9 $VER
+cd $VER
 ## Ignore all downloaded/installed files
-#echo "nextflow" > .gitignore
+echo "bin conf include jmods legal lib LICENSE man README release" | tr " " "\n" > .gitignore
 
-chmod -R 775 $MODSRC/nextflow/$VER
+chmod -R a+rX $MODSRC/java/$VER
 
 ## Version control files
 git add .gitignore
