@@ -1,0 +1,12 @@
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python = 3.10.4
+  - pip
+  - pip:
+      - synapseclient == 3.1.1
+      - pandas
+      - pysftp
+      - pyyaml
+      - pyhere
