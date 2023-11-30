@@ -5,6 +5,8 @@
 wget https://github.com/git-lfs/git-lfs/releases/download/v3.4.0/git-lfs-linux-amd64-v3.4.0.tar.gz
 tar -xzf git-lfs-linux-amd64-v3.4.0.tar.gz
 
+chmod 775 -R .
+
 ## Ignore all downloaded/installed files
 echo "git-lfs*" > .gitignore
 
