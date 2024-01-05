@@ -14,7 +14,7 @@ conda activate mamba_env
 
 # Install 'methylpy' via conda, which correctly installs all dependencies,
 # despite the installation instructions on the git repo
-mamba create -y -c bioconda -c conda-forge -p $PWD/methylpy_env methylpy
+mamba create -y -c bioconda -c conda-forge -p $PWD/methylpy_env methylpy==1.4.3
 conda activate $PWD/methylpy_env
 
 # Download and run the official test of methylpy components
