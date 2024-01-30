@@ -6,8 +6,12 @@
 VER='23.10.0'
 wget -O nextflow https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
 
+# Also install latest nf-test (0.8.4)
+curl -fsSL https://code.askimed.com/install/nf-test | bash
+
 ## Ignore all downloaded/installed files
 echo "nextflow" > .gitignore
+echo "nf-test" >> .gitignore
 
 chmod -R 775 .
 
