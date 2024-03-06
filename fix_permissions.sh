@@ -1,3 +1,12 @@
+#!/bin/bash
+
+#SBATCH -p shared
+#SBATCH -c 1
+#SBATCH --mem=2G
+#SBATCH --job-name=fix_permissions
+#SBATCH -o fix_permissions.log
+#SBATCH -e fix_permissions.log
+
 #   Ensure permissions are correct on all source and lua files:
 #   'ordinary_permissions' controls permissions on all lua files and non-conda-
 #   environment source files. 'conda_permissions' controls permissions on conda
@@ -18,7 +27,7 @@ for env_dir in $(ls -1d ${src_dir}/*/*/*_env); do
 done
 
 echo "Setting open permissions on 'r_nac'..."
-chmod 777 -R ${src_dir}/r_nac/1.0/nac_env
+chmod -R 777 ${src_dir}/r_nac/1.0/nac_env
 
 echo "Setting default permisions on all lua files..."
 chmod -R $ordinary_permissions $lua_dir
