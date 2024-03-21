@@ -46,9 +46,11 @@ conda create -n mamba_env -c conda-forge mamba
 conda activate mamba_env
 mamba env create -p $PWD/cellprofiler_env -f environment.yml
 
-# Remove a potentially problematic package
+# Remove a problematic package and use an earlier version of scikit-image
+# without issues
 conda activate $PWD/cellprofiler_env
 pip uninstall pooch
+pip install --upgrade scikit-image==0.18.3
 
 ## Ignore all downloaded/installed files
 echo "cellprofiler_env" > .gitignore
