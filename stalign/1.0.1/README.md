@@ -14,7 +14,12 @@ pip install --upgrade "git+https://github.com/JEFworks-Lab/STalign.git"
 pip install session_info pyhere openpyxl
 conda deactivate
 
+#   Also directly clone the repo, since sometimes the user is expected to
+#   directly invoke python scripts from the repo
+git clone git@github.com:JEFworks-Lab/STalign.git
+
 echo 'stalign_env' > .gitignore
+echo 'STalign' >> .gitignore
 
 #   Set open permissions, except don't allow writing that could corrupt the
 #   conda environment for everyone
