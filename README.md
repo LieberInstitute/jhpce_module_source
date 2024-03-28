@@ -1,12 +1,12 @@
 # JHPCE module source
 
-This repository contains the [module](https://lmod.readthedocs.io/) source files for modules contributed to [JHPCE](http://www.jhpce.jhu.edu/) by members of the [R/Bioconductor-powered Team Data Science](https://lcolladotor.github.io) at the [Lieber Institute for Brain Development](https://www.libd.org/).
+This repository contains the [module](https://lmod.readthedocs.io/) source files for modules contributed to [JHPCE](https://jhpce.jhu.edu/) mostly by members of the [R/Bioconductor-powered Team Data Science](https://lcolladotor.github.io) at the [Lieber Institute for Brain Development](https://www.libd.org/). Though other people from LIBD can contribute to these modules and request to be added to the `lieber_modules` user group as detailed [here](https://github.com/LieberInstitute/jhpce_module_config?tab=readme-ov-file#lieber_modules-membership-rules).
 
 The configuration files are hosted in the [jhpce_module_config](https://github.com/LieberInstitute/jhpce_module_config) GitHub repository.
 
 # Questions
 
-If you have any questions, please send an email to the [JHPCE bithelp](mailto:bithelp@lists.johnshopkins.edu) mailing list.
+If you have any questions, please send an email to the [JHPCE bithelp](mailto:bithelp@lists.johnshopkins.edu) mailing list described at [_Ways to Seek Help and Support_](https://jhpce.jhu.edu/help/help-basics/#ways-to-seek-help-and-support).
 
 # Usage
 
@@ -48,10 +48,12 @@ chmod 775 -R hisat2/2.2.1/
 
 - [Nick Eagles](https://nick-eagles.github.io/)
 - [Leonardo Collado Torres](http://lcolladotor.github.io)
+- [Geo Pertea](https://github.com/gpertea)
+- [Ryan Miller](https://github.com/RyAMiller)
 
 ## Former
 
-- [Emily E Burke](https://www.libd.org/team/emily-e-burke/)
+- [Emily E Burke](https://github.com/emilyburke)
 - [Andrew E Jaffe](http://aejaffe.com/)
 
 # JHPCE location
