@@ -11,7 +11,7 @@ conda create -y -p stalign_env python=3.8
 #   Install STalign and its dependencies, then add some libraries I use
 conda activate ./stalign_env
 pip install --upgrade "git+https://github.com/JEFworks-Lab/STalign.git"
-pip install session_info pyhere openpyxl
+pip install session_info pyhere openpyxl tables
 conda deactivate
 
 #   Also directly clone the repo, since sometimes the user is expected to
