@@ -2,10 +2,27 @@
 
 ```bash
 ## Commands used for installing the software
-git clone https://github.com/shz9/ldsc.git
+
+#   Make sure not to rely on user packages
+export PYTHONNOUSERSITE="some_value"
+
+git clone https://github.com/bulik/ldsc.git
+
+# Use mamba, which will be faster
+module load conda/3-23.3.1
+# conda create -n mamba_env -c conda-forge mamba
+conda activate mamba_env
+
+mamba env create -p ldsc_env -f ldsc/environment.yml
 
 ## Ignore all downloaded/installed files
-echo "ldsc*" >> .gitignore
+echo "ldsc*" > .gitignore
+
+#   Set open permissions, except don't allow writing that could corrupt the
+#   conda environment for everyone
+chmod 775 README.md .gitignore .
+chmod 775 -R ldsc
+chmod 555 -R ldsc_env
 
 ## Version control files
 git add .gitignore
@@ -27,14 +44,14 @@ echo "Hostname: ${HOSTNAME}"
 $ module list
 
 Currently Loaded Modules:
-  1) matlab/R2019a     5) gcc/4.4.7
-  2) stata/16          6) COMMUNITY_CENTOS7_DEFAULT_ENV
-  3) JHPCE_tools/1.0   7) JHPCE_CENTOS7_DEFAULT_ENV
-  4) sge/8.1.9         8) python/3.7.3
-  
-$ date
-Thu Mar 12 14:34:13 EDT 2020
+  1) JHPCE_ROCKY9_DEFAULT_ENV   2) JHPCE_tools/3.0   3) conda/3-23.3.1
 
+ 
+
+$ date
+Wed Apr 17 03:01:07 PM EDT 2024
+$ echo "User: ${USER}"
+User: neagles
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-109.cm.cluster
+Hostname: compute-093.cm.cluster
 ```
