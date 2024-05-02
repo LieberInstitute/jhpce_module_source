@@ -31,6 +31,9 @@ echo "nac_env" > .gitignore
 #   the module is loaded
 chmod 775 -R .
 
+#   Prevent writing to a particular crucial directory (experimental fix)
+chmod 555 -R nac_env/lib/R/etc
+
 ## Version control files
 git add .gitignore
 git add README.md
