@@ -17,6 +17,9 @@ mamba create -y -p nda_env python==3.10
 #   Install nda-tools 0.2.27 and some additional packages we commonly use
 conda activate ./nda_env
 pip install nda-tools==0.2.27 pyhere session_info openpyxl
+
+#   NDA-recommended solution if keyring backend doesn't exist after installation
+pip install secretstorage --upgrade keyrings.alt
 conda deactivate
 
 ## Ignore all downloaded/installed files
