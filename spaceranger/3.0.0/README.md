@@ -42,11 +42,11 @@ Currently Loaded Modules:
  
 
 $ date
-Fri Jul  7 10:29:06 AM EDT 2023
+Thu Apr 18 02:18:54 PM EDT 2024
 
 $ echo "User: ${USER}"
-User: neagles
+User: rmiller
 
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-111.cm.cluster
+Hostname: compute-107.cm.cluster
 ```
