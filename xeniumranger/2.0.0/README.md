@@ -37,16 +37,16 @@ echo "Hostname: ${HOSTNAME}"
 ## copy paste the output from the previous commands
 $ module list
 
-
-
- 
+Currently Loaded Modules:
+  1) JHPCE_ROCKY9_DEFAULT_ENV   2) JHPCE_tools/3.0
 
 $ date
-
+Thu Jun  6 10:33:23 AM EDT 2024
 
 $ echo "User: ${USER}"
-
+User: rmiller
 
 $ echo "Hostname: ${HOSTNAME}"
+Hostname: login31.cm.cluster
 
 ```
