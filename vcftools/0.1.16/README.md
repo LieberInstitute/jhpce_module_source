@@ -7,10 +7,10 @@ wget https://github.com/vcftools/vcftools/releases/download/v0.1.16/vcftools-0.1
     cd vcftools-0.1.16 && \
     ./configure && \
     make && \
-    make prefix=/jhpce/shared/jhpce/libd/vcftools/0.1.16 install
+    make prefix=/jhpce/shared/libd/core/vcftools/0.1.16 install
 
 ## Ignore all downloaded/installed files
-cd /jhpce/shared/jhpce/libd/vcftools/0.1.16
+cd /jhpce/shared/libd/core/vcftools/0.1.16
 echo "vcftools*" > .gitignore
 echo "bin" >> .gitignore
 echo "share" >> .gitignore
