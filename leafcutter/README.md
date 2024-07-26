@@ -44,5 +44,5 @@ Set the proper permissions and version control files
 cd /jhpce/shared/libd/core/leafcutter
 echo "leafcutter*/*" > .gitignore
 chmod -R a+rX .
-git add .gitignore README.md sessionInfo.txt leafcutter-0.2.9.yaml leafcutter-0.2.9/conda-meta/pinned
+git add -f .gitignore README.md sessionInfo.txt leafcutter-0.2.9.yaml leafcutter-0.2.9/conda-meta/pinned
 ```
