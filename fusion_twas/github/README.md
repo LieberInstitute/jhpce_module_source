@@ -23,11 +23,6 @@ git add README.md
 chmod 775 -R .
 ```
 
-```bash
-module load fusion_twas
-Rscript /jhpce/shared/jhpce/libd/fusion_twas/github/fusion_twas/FUSION.compute_weights.R --help
-```
-
 # Reproducibility
 
 ```bash
