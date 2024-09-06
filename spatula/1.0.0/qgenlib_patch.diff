@@ -1,0 +1,14 @@
+71,74c71,74
+< find_library(DEFLATELIB libdeflate.a deflate HINTS /usr/lib/x86_64-linux-gnu/ /usr/lib/ /usr/lib64/ ../libdeflate/)
+< if(NOT DEFLATELIB)
+<     message(FATAL_ERROR "libdeflate library not found")
+< endif()
+---
+> #find_library(DEFLATELIB libdeflate.a deflate HINTS /usr/lib/x86_64-linux-gnu/ /usr/lib/ /usr/lib64/ ../libdeflate/)
+> #if(NOT DEFLATELIB)
+> #    message(FATAL_ERROR "libdeflate library not found")
+> #endif()
+97c97
+< TARGET_LINK_LIBRARIES(${APP_EXE} qgen ${HTS_LIBRARIES} ${ZLIB} ${ZLIB} ${BZIP2} ${LZMA} ${CURLLIB} ${DEFLATELIB} ${CRYPTOLIB})
+---
+> TARGET_LINK_LIBRARIES(${APP_EXE} qgen ${HTS_LIBRARIES} ${ZLIB} ${ZLIB} ${BZIP2} ${LZMA} ${CURLLIB} ${CRYPTOLIB})

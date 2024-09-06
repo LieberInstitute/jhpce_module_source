@@ -4,6 +4,11 @@
 #   Make sure not to rely on user packages
 export PYTHONNOUSERSITE="some_value"
 
+git clone git@github.com:ebiggers/libdeflate.git
+cd libdeflate
+cmake -B build && cmake --build build
+cd ..
+
 #   Start with a basic conda environment with just python 3.9
 module load conda/3-24.3.0
 conda create -y -p ficture_env python=3.9
@@ -12,6 +17,20 @@ conda create -y -p ficture_env python=3.9
 conda activate ./ficture_env
 pip install ficture==0.0.3.1 
 pip install parquet-tools session_info pyhere
+
+#   Necessary for spatula
+conda install -y -c conda-forge libdeflate
+
+#   Install spatula, which includes helper tools for running FICTURE
+git clone --recursive https://github.com/seqscope/spatula.git
+cd spatula/submodules
+sh -x build.sh
+cd ..
+mkdir build
+cd build
+cmake ..
+make
+
 conda deactivate
 
 echo 'ficture_env' > .gitignore
