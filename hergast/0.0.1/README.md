@@ -10,11 +10,12 @@ git clone https://github.com/GYQ-form/HERGAST.git
 module load conda/3-24.3.0
 conda create -y -p hergast_env python=3.9
 
-#   Install HERGAST, then add some libraries I use
+#   Install HERGAST, then add some libraries I use. bin2cell is installed for
+#   its ability to read Visium HD data
 conda activate ./hergast_env
 cd HERGAST
 pip install .
-pip install session_info pyhere adata
+pip install session_info pyhere bin2cell==0.3.0
 cd ..
 
 conda deactivate
