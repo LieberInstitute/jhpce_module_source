@@ -14,7 +14,7 @@ conda create -y -p hergast_env python=3.9
 conda activate ./hergast_env
 cd HERGAST
 pip install .
-pip install session_info pyhere
+pip install session_info pyhere adata
 cd ..
 
 conda deactivate
