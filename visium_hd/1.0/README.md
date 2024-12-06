@@ -39,16 +39,25 @@ cmake ..
 make
 cd ../..
 
+#   Clone NEST and modify the main shell script utility to invoke python scripts
+#   as long as they're on the PATH
+git clone git@github.com:schwartzlab-methods/NEST.git
+sed -i 's|python \(.*\)\.py|python $(which \1.py)|g' NEST/nest
+
+#   Install NEST python dependencies
+pip install qnorm pyvis altair
+
 conda deactivate
 
 echo 'hd_env' > .gitignore
 echo 'HERGAST' >> .gitignore
 echo 'spatula' >> .gitignore
+echo 'NEST' >> .gitignore
 
 #   Set open permissions, except don't allow writing that could corrupt the
 #   conda environment for everyone
 chmod 775 README.md .gitignore .
-chmod 775 -R HERGAST spatula
+chmod 775 -R HERGAST spatula NEST
 chmod 555 -R hd_env
 
 ## Version control files
