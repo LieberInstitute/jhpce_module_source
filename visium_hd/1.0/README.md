@@ -39,10 +39,10 @@ cmake ..
 make
 cd ../..
 
-#   Clone NEST and modify the main shell script utility to invoke python scripts
+#   Clone NEST and modify the main shell script utility to invoke scripts
 #   as long as they're on the PATH
 git clone git@github.com:schwartzlab-methods/NEST.git
-sed -i 's|python \(.*\)\.py|python $(which \1.py)|g' NEST/nest
+sed -Ei 's/(python -u|python|bash) (.*)\.(py|sh)/\1 $(which \2.\3)/g' NEST/nest
 
 #   Install NEST python dependencies
 pip install qnorm pyvis altair
