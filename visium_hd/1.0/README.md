@@ -11,7 +11,7 @@ conda create -y -p hd_env python=3.9
 conda activate ./hd_env
 
 #   Install bin2cell, FICTURE, and ENACT
-pip install bin2cell==0.3.3 ficture==0.0.5.2 enact-SO==0.2.3
+pip install bin2cell==0.3.3 ficture==0.0.5.4.1 enact-SO==0.2.3
 
 #   For stardist with GPU support (bin2cell and maybe ENACT)
 pip install tensorflow[and-cuda]
