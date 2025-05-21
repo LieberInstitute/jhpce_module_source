@@ -31,9 +31,9 @@ Currently Loaded Modules:
  
 
 $ date
-Tue May 13 11:01:17 AM EDT 2025
+Wed May 21 10:16:20 AM EDT 2025
 $ echo "User: ${USER}"
 User: neagles
 $ echo "Hostname: ${HOSTNAME}"
-Hostname: compute-117.cm.cluster
+Hostname: compute-126.cm.cluster
 ```
