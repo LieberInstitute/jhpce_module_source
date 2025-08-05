@@ -39,12 +39,12 @@ cmake ..
 make
 cd ../..
 
-#   Clone NEST and modify the main shell script utility to invoke scripts
+#   Clone CellNEST and modify the main shell script utility to invoke scripts
 #   as long as they're on the PATH
-git clone git@github.com:schwartzlab-methods/NEST.git
-sed -Ei 's/(python -u|python|bash) (.*)\.(py|sh)/\1 $(which \2.\3)/g' NEST/nest
+git clone git@github.com:schwartzlab-methods/CellNEST.git
+sed -Ei 's/(python -u|python|bash) (.*)\.(py|sh)/\1 $(which \2.\3)/g' CellNEST/cellnest
 
-#   Install NEST python dependencies
+#   Install CellNEST python dependencies
 pip install qnorm pyvis altair
 
 conda deactivate
@@ -52,12 +52,12 @@ conda deactivate
 echo 'hd_env' > .gitignore
 echo 'HERGAST' >> .gitignore
 echo 'spatula' >> .gitignore
-echo 'NEST' >> .gitignore
+echo 'CellNEST' >> .gitignore
 
 #   Set open permissions, except don't allow writing that could corrupt the
 #   conda environment for everyone
 chmod 775 README.md .gitignore .
-chmod 775 -R HERGAST spatula NEST
+chmod 775 -R HERGAST spatula CellNEST
 chmod 555 -R hd_env
 
 ## Version control files
