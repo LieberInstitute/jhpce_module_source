@@ -45,7 +45,7 @@ git clone git@github.com:schwartzlab-methods/CellNEST.git
 sed -Ei 's/(python -u|python|bash) (.*)\.(py|sh)/\1 $(which \2.\3)/g' CellNEST/cellnest
 
 #   Install CellNEST python dependencies
-pip install qnorm pyvis altair
+pip install qnorm pyvis altair torch-sparse torch-scatter
 
 conda deactivate
 
