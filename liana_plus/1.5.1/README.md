@@ -14,7 +14,7 @@ conda activate ./liana_env
 pip install liana==1.5.1
 
 #   Libraries needed for tutorial or otherwise helpful
-pip install 'decoupler>=2.0.0' mofax muon omnipath marsilea plotnine session_info pyhere openpyxl
+pip install 'decoupler>=2.0.0' mofax muon omnipath marsilea plotnine session_info pyhere openpyxl mofapy2
 
 conda deactivate
 
