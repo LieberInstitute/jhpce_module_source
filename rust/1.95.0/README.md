@@ -6,7 +6,9 @@ rm rust-1.95.0-x86_64-unknown-linux-gnu.tar.xz
 
 #   It looks like binaries are already built despite the suggestion to install?
 mkdir rust-1.95.0-x86_64-unknown-linux-gnu/bin
+mkdir rust-1.95.0-x86_64-unknown-linux-gnu/lib
 cp rust-1.95.0-x86_64-unknown-linux-gnu/*/bin/* rust-1.95.0-x86_64-unknown-linux-gnu/bin/
+cp rust-1.95.0-x86_64-unknown-linux-gnu/*/lib/*.so* rust-1.95.0-x86_64-unknown-linux-gnu/lib/
 
 ## Version control files
 echo rust-1.95.0-x86_64-unknown-linux-gnu > .gitignore
