@@ -4,14 +4,17 @@ curl -O https://static.rust-lang.org/dist/rust-1.95.0-x86_64-unknown-linux-gnu.t
 tar -xJf rust-1.95.0-x86_64-unknown-linux-gnu.tar.xz
 rm rust-1.95.0-x86_64-unknown-linux-gnu.tar.xz
 
-#   It looks like binaries are already built despite the suggestion to install?
-mkdir rust-1.95.0-x86_64-unknown-linux-gnu/bin
-mkdir rust-1.95.0-x86_64-unknown-linux-gnu/lib
-cp rust-1.95.0-x86_64-unknown-linux-gnu/*/bin/* rust-1.95.0-x86_64-unknown-linux-gnu/bin/
-cp rust-1.95.0-x86_64-unknown-linux-gnu/*/lib/*.so* rust-1.95.0-x86_64-unknown-linux-gnu/lib/
+cd rust-1.95.0-x86_64-unknown-linux-gnu
+./install.sh --prefix=/jhpce/shared/libd/core/rust/1.95.0
+cd ..
 
 ## Version control files
 echo rust-1.95.0-x86_64-unknown-linux-gnu > .gitignore
+echo bin >> .gitignore
+echo lib >> .gitignore
+echo libexec >> .gitignore
+echo etc >> .gitignore
+echo share >> .gitignore
 chmod -R 775 ..
 git add .gitignore
 git add README.md
