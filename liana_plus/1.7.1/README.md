@@ -14,7 +14,7 @@ conda activate ./liana_env
 pip install liana==1.7.1
 
 #   Libraries needed for tutorial or otherwise helpful
-pip install 'decoupler>=2.0.0' mofax muon omnipath marsilea plotnine session_info pyhere openpyxl mofapy2 squidpy==1.8.1
+pip install 'decoupler>=2.0.0' mofax muon omnipath marsilea plotnine session_info pyhere openpyxl mofapy2 squidpy==1.8.1 pySankey
 
 conda deactivate
 
