@@ -17,7 +17,7 @@ pip install bin2cell==0.3.3 ficture==0.0.5.2 enact-SO==0.2.4
 pip install tensorflow[and-cuda]
 
 #   Extra libraries that are useful to have
-pip install parquet-tools session_info pyhere openpyxl plotnine
+pip install parquet-tools session_info pyhere openpyxl plotnine ome_types
 
 #   Necessary for spatula
 conda install -y -c conda-forge libdeflate
