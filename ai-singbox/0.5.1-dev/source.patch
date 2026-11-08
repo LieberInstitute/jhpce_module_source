@@ -1,0 +1,541 @@
+diff --git a/README.md b/README.md
+index 8da2cec129b78a87b873bb91f62bbe5448a13afa..d1cd719fd7ab585bfb57ee6da1d76d89d6671503 100644
+--- a/README.md
++++ b/README.md
+@@ -118,0 +119,7 @@ session needs (`/usr`, `/etc`, `/opt`, `/jhpce/shared`); module maintainers mana
++The shared test installation is `/jhpce/shared/libd/core/ai-singbox/0.5.1-dev`.
++Its modulefile is `/jhpce/shared/libd/modulefiles/ai-singbox/0.5.1-dev.lua`;
++loading it adds the installation's `bin/` directory to `PATH`.
++If your module path does not include the LIBD modules, first run
++`module use /jhpce/shared/libd/modulefiles`. For repository development, use
++`module use <repo>/modulefiles` and `module load ai-singbox/0.5.1-dev` instead.
++
+@@ -123,2 +130 @@ srun --pty -p shared --mem=16G -c 4 -t 8:00:00 bash
+-module use /dcs04/lieber/lcolladotor/dbDev_LIBD001/jhpce-singbox/modulefiles   # until installed site-wide
+-module load ai-singbox/0.1
++module load ai-singbox/0.5.1-dev
+@@ -137,0 +144,33 @@ exit
++The module includes `ai-singbox-codex` (also named `jcodex`); no personal
++scripts are needed. It shows resolved writable folders and configured
++read-only top folders, explains customization, then requires Enter before
++starting Codex inside the container:
++
++```bash
++ai-singbox-codex --dry-run
++ai-singbox-codex --write-here    ## explicitly allow writes in the current directory
++ai-singbox-codex --profile myproject
++ai-singbox-codex --write /existing/project/output -- resume --last
++ai-singbox-codex login --device-auth    ## first login into the sandbox's Codex home
++```
++
++Sandbox options precede Codex arguments; use `--` to pass conflicting options
++to Codex. `ai-singbox-codex --help` lists options. It uses `--no-daemon` and
++disables agent permission prompts; the container enforces write restrictions.
++It finds Codex through `AI_SINGBOX_CODEX`, `~/.local/bin/codex`, or `PATH`, in
++that order. `--update` explicitly installs/updates only the user's `~/.local`
++copy. The launcher creates no Slurm allocation.
++
++`--write-here` is shorthand for `--write "$(pwd -P)"`. It grants the whole
++current directory tree, subject to the wrapper's usual checks; nothing is
++granted implicitly. Use repeatable `--write PATH` for other existing folders.
++For persistent defaults, edit `~/.config/ai-singbox/config` (home, scratch,
++modules), and put `read =` / `write =` entries in
++`~/.config/ai-singbox/profiles/NAME.conf`, selected with `--profile NAME`.
++To replace the site's default profile, copy and edit it on the host:
++
++```bash
++mkdir -p ~/.config/ai-singbox/profiles
++cp -n "$AI_SINGBOX_ROOT/etc/profiles/default.conf" ~/.config/ai-singbox/profiles/default.conf
++```
++
+@@ -228,2 +267 @@ srun --pty -p shared --mem=64G -c 8 -t 2-00:00:00 bash
+-module use /dcs04/lieber/lcolladotor/dbDev_LIBD001/jhpce-singbox/modulefiles
+-module load ai-singbox/0.1
++module load ai-singbox/0.5.1-dev
+diff --git a/bin/ai-singbox b/bin/ai-singbox
+index 8dbf974242ad683a56f4614842886eb3496e1ffe..3add9fd3f38a70a961570fe2cb1f6c586f60db43 100755
+--- a/bin/ai-singbox
++++ b/bin/ai-singbox
+@@ -12 +12 @@ PROG=ai-singbox
+-VERSION=0.5.0-dev
++VERSION=0.5.1-dev
+diff --git a/bin/ai-singbox-codex b/bin/ai-singbox-codex
+new file mode 100755
+index 0000000000000000000000000000000000000000..692e562664591f7f276b4aa90331e1b540af0acc
+--- /dev/null
++++ b/bin/ai-singbox-codex
+@@ -0,0 +1,127 @@
++#!/bin/bash
++set -eo pipefail
++
++## use the wrapper shipped beside this launcher, including through the jcodex alias
++PROG=${0##*/}
++BIN_DIR=$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")
++WRAPPER=$BIN_DIR/ai-singbox
++
++usage() {
++  cat <<'HELP'
++Usage: ai-singbox-codex [sandbox options] [--] [Codex arguments...]
++
++Show folder access, require Enter, then start
++embedded Codex INSIDE Singularity with agent permission prompts disabled.
++Also available as: jcodex (after 'module load ai-singbox').
++
++Sandbox options (before Codex arguments):
++  --profile NAME       select an ai-singbox profile (repeatable; default: default)
++  --write PATH         existing writable folder (repeatable)
++  --write-here         add the current directory to writable folders
++  --read PATH          additional read-only folder (repeatable)
++  --home-dir DIR       select a persistent sandbox home
++  --home-mode MODE     synthetic | real-ro | real-rw
++  --module NAME        load a module inside the container (repeatable)
++  --no-scratch         disable the general writable scratch mount
++  --no-personal-libs   hide host R/Python libraries
++  --codex-seed DIR     copy settings into the sandbox (keeps existing files)
++  --seed-credentials   also copy login; shares its refresh token with the host
++  --reseed             overwrite previously seeded settings
++  --dry-run           show folder summary without acknowledging or starting
++  --update             update ~/.local Codex on the HOST, then exit
++  -h, --help           this help; use '-- --help' for Codex help
++
++Examples:
++  ai-singbox-codex --profile myproject
++  ai-singbox-codex --write-here
++  ai-singbox-codex --write /existing/project/output -- resume --last
++  ai-singbox-codex login --device-auth
++
++Codex uses the sandbox's own settings/login, not the host's CODEX_HOME.
++Use '--' to pass a conflicting option (e.g. Codex's --profile) to Codex.
++Writable subfolders are exceptions to the read-only parents shown below.
++Customize defaults in ~/.config/ai-singbox/config; persistent read/write paths
++belong in ~/.config/ai-singbox/profiles/NAME.conf (select with --profile NAME).
++Override the site default by copying $AI_SINGBOX_ROOT/etc/profiles/default.conf
++to ~/.config/ai-singbox/profiles/default.conf and editing the copy on the host.
++HELP
++}
++die() { printf '%s: %s\n' "$PROG" "$*" >&2; exit 2; }
++
++## parse sandbox options; remaining arguments belong to Codex unchanged
++sandbox_args=(); preview=0; update=0
++while (( $# )); do
++  case "$1" in
++    --profile|--write|--read|--home-dir|--home-mode|--module|--codex-seed)
++      (( $# >= 2 )) || die "$1 needs a value"
++      sandbox_args+=("$1" "$2"); shift 2 ;;
++    --profile=*|--write=*|--read=*|--home-dir=*|--home-mode=*|--module=*|--codex-seed=*)
++      sandbox_args+=("$1"); shift ;;
++    --no-scratch|--no-personal-libs|--seed-credentials|--reseed)
++      sandbox_args+=("$1"); shift ;;
++    --write-here) sandbox_args+=(--write "$(pwd -P)"); shift ;;
++    --dry-run) preview=1; shift ;;
++    --update) update=1; shift ;;
++    -h|--help) usage; exit 0 ;;
++    --) shift; break ;;
++    *) break ;;
++  esac
++done
++[[ -z "${AI_SINGBOX:-}" ]] || die 'already inside ai-singbox; run codex directly here'
++
++## updates affect only the user's copy; launches honor an explicit CLI override
++if (( update )); then
++  (( $# == 0 && ${#sandbox_args[@]} == 0 && preview == 0 )) || die '--update must be used alone'
++  module load node
++  npm install --global --prefix "$HOME/.local" @openai/codex@latest
++  exec "$HOME/.local/bin/codex" --version
++fi
++codex_bin=${AI_SINGBOX_CODEX:-}
++if [[ -z "$codex_bin" ]]; then
++  if [[ -x "$HOME/.local/bin/codex" ]]; then codex_bin="$HOME/.local/bin/codex"
++  else codex_bin=$(command -v codex || true); fi
++fi
++codex_bin=$(command -v -- "$codex_bin" || true)
++## Lmod must run without nounset; never fall back to a host session
++module load node
++set -u
++[[ -x "$codex_bin" ]] || die "Codex is missing; run $PROG --update on the host first"
++[[ "$("$codex_bin" --help)" == *--no-daemon* ]] || die "Codex lacks --no-daemon; run $PROG --update"
++export AI_SINGBOX_CODEX="$codex_bin"
++export AI_SINGBOX_ROOT="$(dirname "$BIN_DIR")"
++real_home=$(getent passwd "$(id -un)" | cut -d: -f6)
++config_dir=${AI_SINGBOX_CONFIG_DIR:-${real_home:-$HOME}/.config/ai-singbox}
++
++## use the installed wrapper to resolve profiles and validate every requested path
++launch=("$WRAPPER" "${sandbox_args[@]}" --agent codex --yolo)
++binds=$("${launch[@]}" --print-binds)
++{
++  printf '%s: %s; Codex starts inside Singularity\n' "$PROG" "$("$WRAPPER" --version)"
++  printf 'Sandbox options:'
++  if (( ${#sandbox_args[@]} )); then printf ' %q' "${sandbox_args[@]}"; else printf ' (default configuration)'; fi
++  printf '\n\nWRITABLE folders (host SOURCE -> DEST inside container):\n'
++  printf '%s\n' "$binds" | awk 'NR == 1 || $1 == "rw"'
++  printf '\nREAD-ONLY top folders from configuration (WRITABLE children above are exceptions):\n'
++  printf '%s\n' "$binds" | awk '
++    NR == 1 { print; next }
++    $1 == "ro" && /\[(profile [^]]+|config|--read)\]$/ { print; found=1 }
++    END { if (!found) print "  (none)" }
++  '
++  printf '\nSystem/shared software and host agent binaries are also read-only.\n'
++  printf '\nCustomize on the host before launching:\n'
++  printf '  defaults: %s/config (home, scratch, modules; writes belong in profiles)\n' "$config_dir"
++  printf '  profiles: %s/profiles/NAME.conf; select with --profile NAME\n' "$config_dir"
++  printf '  override default: copy %s/etc/profiles/default.conf to %s/profiles/default.conf\n' "$AI_SINGBOX_ROOT" "$config_dir"
++  printf '  profile entries: read = /path, write = /existing/path, include = default\n'
++  printf '  add writes for one run: %s --write-here or %s --write /existing/path (repeatable)\n' "$PROG" "$PROG"
++} >&2
++(( preview )) && exit 0
++
++## require an explicit empty line from a terminal; EOF or cancellation never launches
++[[ -t 0 ]] || die 'acknowledgement requires a terminal; use --dry-run to inspect'
++while true; do
++  printf '\nPress Enter to acknowledge and start singboxed Codex (Ctrl-C cancels): ' >&2
++  IFS= read -r reply || die 'acknowledgement cancelled'
++  [[ -z "$reply" ]] && break
++done
++exec "${launch[@]}" -- --no-daemon "$@"
+diff --git a/bin/jcodex b/bin/jcodex
+new file mode 120000
+index 0000000000000000000000000000000000000000..17a49fc098a0c79001e40a924804dc4d5c7b7001
+--- /dev/null
++++ b/bin/jcodex
+@@ -0,0 +1 @@
++ai-singbox-codex
+\ No newline at end of file
+diff --git a/docs/design.md b/docs/design.md
+index 0652f3ac5be4af206bbbc67cdd075d136cddcb1e..aca2b579a9bdf256f53004af5993f8fa4f772bb3 100644
+--- a/docs/design.md
++++ b/docs/design.md
+@@ -367 +367 @@ table with notes, full command. Logs are a record, not tamper-proof evidence.
+-`modulefiles/ai-singbox/0.1.lua` (development) derives its root from its own location,
++`modulefiles/ai-singbox/0.5.1-dev.lua` (development) derives its root from its own location,
+@@ -370,0 +371,7 @@ against an unset `HOSTNAME`.
++The module ships `ai-singbox-codex` and the `jcodex` alias. The launcher uses
++its sibling wrapper to resolve and validate profile/read/write options, lists
++writable mounts and configured read-only top folders, shows customization
++instructions, and requires Enter before containerized Codex starts.
++`--write-here` explicitly adds the current physical directory through the usual
++`--write` checks. No current-directory write access is granted implicitly.
++
+diff --git a/docs/roadmap.md b/docs/roadmap.md
+index 112f3281a3256fcf216d5daff3a65b10272df011..ed6d1bd6c9e23c918537536208b806c8ee9865a6 100644
+--- a/docs/roadmap.md
++++ b/docs/roadmap.md
+@@ -3,2 +3,7 @@
+-Status 2026-10-07: the wrapper works from this repository for its author (`module use
+-<repo>/modulefiles`). It is already decoupled from any one account: it locates its own files
++Status 2026-11-06: shared test module `ai-singbox/0.5.1-dev` includes
++`ai-singbox-codex` and its `jcodex` alias. It lists access and customization
++instructions, supports explicit `--write-here` / `--write PATH`, and requires
++Enter before containerized Codex starts. Version `0.5.0-dev` remains installed.
++Transfer-node validation passes; compute-node validation of this version is pending.
++
++The wrapper is decoupled from any one account: it locates its own files
+@@ -69,2 +74,3 @@ Wrapper changes:
+-- One version number: wrapper `VERSION`, git tag `v<version>`, modulefile name `<version>.lua`
+-  (today the modulefile is `0.1` and the wrapper `0.5.0-dev`). Keep `CHANGELOG.md`.
++- Release versioning: wrapper and modulefile are `0.5.1-dev`; the legacy `0.1`
++  development module remains for compatibility. Git release tags and
++  `CHANGELOG.md` remain to be added.
+diff --git a/modulefiles/ai-singbox/0.1.lua b/modulefiles/ai-singbox/0.1.lua
+index 2b16a2c99aa72f656c779d14e39e7d466c6255b1..2be2c51ec5f5b54ce85070780e6cefbeec66180a 100644
+--- a/modulefiles/ai-singbox/0.1.lua
++++ b/modulefiles/ai-singbox/0.1.lua
+@@ -16,0 +17 @@ or --write). Start with: ai-singbox --help, and the README in the module folder.
++  ai-singbox-codex --write-here   (also available as jcodex)
+diff --git a/modulefiles/ai-singbox/0.5.1-dev.lua b/modulefiles/ai-singbox/0.5.1-dev.lua
+new file mode 100644
+index 0000000000000000000000000000000000000000..09e0c6b31dfb6110c804967a04332086e9dbae98
+--- /dev/null
++++ b/modulefiles/ai-singbox/0.5.1-dev.lua
+@@ -0,0 +1,42 @@
++-- -*- lua -*-
++-- vim:ft=lua:et:ts=4
++--
++-- Development modulefile: the install root is derived from this file's location
++-- (<root>/modulefiles/ai-singbox/0.5.1-dev.lua). The deployed copy in
++-- jhpce_module_config should set `root` to the install directory explicitly.
++
++help([[
++ai-singbox 0.5.1-dev: customizable Singularity container sandbox for AI agents.
++Runs a shell or an AI agent (Codex, Claude Code, ...) on JHPCE with storage
++mounted read-only. Writable: $MYSCRATCH, /tmp, a separate persistent session home
++(your real home is not used), and the folders you choose (profile 'write =' lines
++or --write). Start with: ai-singbox --help, and the README in the module folder.
++
++  ai-singbox --help
++  ai-singbox --dry-run --write /dcs04/lieber/<lab>/<project>/agent_out
++  ai-singbox-codex --write-here   (also available as jcodex)
++]])
++
++whatis("Name: ai-singbox")
++whatis("Version: 0.5.1-dev")
++whatis("Description: customizable Singularity container sandbox for AI agents")
++
++-- Guard against an unset HOSTNAME (the site singularity/apptainer modulefiles
++-- fail with a nil error in that case).
++local host = os.getenv("HOSTNAME") or capture("hostname") or ""
++if not string.match(host, "compute") and not string.match(host, "transfer") then
++    LmodError("\
++ai-singbox can only be loaded on a compute or transfer node. Use srun to get one.")
++end
++
++local root = myFileName():match("^(.*)/modulefiles/[^/]+/[^/]+$")
++
++if (mode() == "load") then
++    LmodMessage("Loading ai-singbox/0.5.1-dev (mounted storage is read-only inside the sandbox)")
++elseif (mode() == "unload") then
++    LmodMessage("Unloading ai-singbox/0.5.1-dev")
++end
++
++prepend_path("PATH", pathJoin(root, "bin"))
++setenv("AI_SINGBOX_ROOT", root)
++setenv("AI_SINGBOX_RUNTIME", "/jhpce/shared/jhpce/core/singularity/3.11.4/bin/singularity")
+diff --git a/tests/test_codex_launcher.py b/tests/test_codex_launcher.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..e2b1cba698f6b2dca801d09054bb3b4f79e0d16c
+--- /dev/null
++++ b/tests/test_codex_launcher.py
+@@ -0,0 +1,244 @@
++#!/usr/bin/env python3
++"""Credential-free launcher routing/acknowledgement checks; no model requests."""
++import json
++import os
++from pathlib import Path
++import pty
++import select
++import shutil
++import signal
++import subprocess
++import tempfile
++import time
++import unittest
++
++SCRIPT = Path(__file__).resolve().parents[1] / 'bin/ai-singbox-codex'
++
++
++class LauncherTests(unittest.TestCase):
++    def setUp(self):
++        self.temp = tempfile.TemporaryDirectory(prefix='jcodex-test-')
++        self.addCleanup(self.temp.cleanup)
++        self.root = Path(self.temp.name)
++        cli = self.root / '.local/bin/codex'
++        cli.parent.mkdir(parents=True)
++        self.bin = self.root / 'bin'
++        self.bin.mkdir()
++        self.script = self.bin / 'ai-singbox-codex'
++        shutil.copy2(SCRIPT, self.script)
++        self.log = self.root / 'calls.jsonl'
++        self.env = dict(os.environ, HOME=str(self.root),
++                        PATH=f'{self.bin}:/usr/bin:/bin', JCODEX_TEST_LOG=str(self.log))
++        self.env.pop('AI_SINGBOX', None)
++        self.env.pop('AI_SINGBOX_CODEX', None)
++        self.env['AI_SINGBOX_CONFIG_DIR'] = str(self.root / 'config')
++        init = self.root / 'init.sh'
++        init.write_text('''module() {
++  [[ "$-" != *u* ]] || return 91
++  printf '%s\\n' "$*" >> "$HOME/modules"
++  [[ "${JCODEX_TEST_MODULE_FAIL:-}" != 1 ]]
++}
++export -f module
++''')
++        self.env['BASH_ENV'] = str(init)
++        cli.write_text('''#!/bin/bash
++printf 'codex %s\\n' "$*" >> "$HOME/codex-calls"
++case "$1" in
++  --help) [[ "${JCODEX_TEST_OLD:-}" == 1 ]] || echo --no-daemon ;;
++  --version) echo codex-test ;;
++  *) exit 92 ;;
++esac
++''')
++        cli.chmod(0o700)
++        ai = self.bin / 'ai-singbox'
++        ai.write_text('''#!/usr/bin/python3
++import json, os, sys
++args = sys.argv[1:]
++if args == ['--version']:
++    print('ai-singbox 0.5.1-dev')
++    sys.exit(0)
++with open(os.environ['JCODEX_TEST_LOG'], 'a') as f:
++    f.write(json.dumps(args) + '\\n')
++if '--print-binds' in args:
++    if '--profile=bad' in args:
++        sys.exit(2)
++    print('MODE SOURCE DEST')
++    print('rw /scratch/user /scratch/user [$MYSCRATCH]')
++    print('rw /host/home /users/test [synthetic home]')
++    print('rw /scratch/tmp /tmp, /var/tmp')
++    if '--profile=empty' not in args:
++        print('ro /data/top /data/top [profile selected]')
++        print('ro /extra with spaces /extra with spaces [--read]')
++    print('ro (deny) /usr/bin/ssh')
++else:
++    print('CONTAINER_LAUNCH')
++''')
++        ai.chmod(0o700)
++        npm = self.bin / 'npm'
++        npm.write_text('#!/bin/bash\nprintf "%s\\n" "$*" > "$HOME/npm-calls"\n')
++        npm.chmod(0o700)
++
++    def calls(self):
++        if not self.log.exists():
++            return []
++        return [json.loads(line) for line in self.log.read_text().splitlines()]
++
++    def run_cli(self, *args):
++        return subprocess.run(['bash', str(self.script), *args], env=self.env,
++                              input='', text=True, capture_output=True, timeout=10)
++
++    def interactive(self, *args):
++        master, slave = pty.openpty()
++        proc = subprocess.Popen(['bash', str(self.script), *args], env=self.env,
++                                stdin=slave, stdout=subprocess.PIPE,
++                                stderr=subprocess.STDOUT, start_new_session=True)
++        os.close(slave)
++        self.addCleanup(os.close, master)
++        self.addCleanup(lambda: proc.poll() is None and proc.kill())
++        self.addCleanup(proc.stdout.close)
++        output = b''
++        deadline = time.monotonic() + 10
++        while b'Press Enter' not in output and time.monotonic() < deadline:
++            readable, _, _ = select.select([proc.stdout], [], [], 0.1)
++            if readable:
++                block = os.read(proc.stdout.fileno(), 4096)
++                if not block:
++                    break
++                output += block
++        self.assertIn(b'Press Enter', output, output)
++        self.assertEqual(len(self.calls()), 1, 'nothing launched before Enter')
++        return proc, master, output
++
++    def test_preview_lists_writes_and_configured_reads(self):
++        result = self.run_cli('--profile=selected', '--dry-run')
++        self.assertEqual(result.returncode, 0, result.stderr)
++        for value in ('WRITABLE', '/scratch/user', '/tmp, /var/tmp',
++                      'READ-ONLY', '/data/top', '/extra with spaces'):
++            self.assertIn(value, result.stderr)
++        self.assertNotIn('(deny)', result.stderr)
++        self.assertNotIn('Press Enter', result.stderr)
++        self.assertEqual(len(self.calls()), 1)
++        self.assertEqual((self.root / 'modules').read_text().splitlines(),
++                         ['load node'])
++        for value in (str(self.root / 'config/config'), 'profiles/default.conf',
++                      'write = /existing/path', '--write-here', '--write /existing/path'):
++            self.assertIn(value, result.stderr)
++
++    def test_write_here_is_explicit_current_directory_grant(self):
++        result = self.run_cli('--write-here', '--write', '/another/path', '--dry-run')
++        self.assertEqual(result.returncode, 0, result.stderr)
++        self.assertEqual(self.calls()[0][:4],
++                         ['--write', os.getcwd(), '--write', '/another/path'])
++        self.assertNotIn('--write', self.run_default_preview())
++
++    def run_default_preview(self):
++        self.run_cli('--dry-run')
++        return self.calls()[-1]
++
++    def test_explicit_cli_override(self):
++        original = self.root / '.local/bin/codex'
++        override = self.root / 'custom-codex'
++        original.rename(override)
++        self.env['AI_SINGBOX_CODEX'] = str(override)
++        result = self.run_cli('--dry-run')
++        self.assertEqual(result.returncode, 0, result.stderr)
++
++    def test_jcodex_alias_resolves_the_same_wrapper(self):
++        alias = self.bin / 'jcodex'
++        alias.symlink_to(self.script.name)
++        result = subprocess.run([str(alias), '--dry-run'], env=self.env,
++                                capture_output=True, text=True, timeout=10)
++        self.assertEqual(result.returncode, 0, result.stderr)
++        self.assertIn('jcodex: ai-singbox 0.5.1-dev', result.stderr)
++
++    def test_enter_launches_and_preserves_arguments(self):
++        proc, master, output = self.interactive(
++            '--profile', 'project', '--write', '/project/output with spaces',
++            '--', 'resume', '--last', 'literal $(false); a b')
++        os.write(master, b'\n')
++        tail, _ = proc.communicate(timeout=10)
++        self.assertEqual(proc.returncode, 0, output + tail)
++        self.assertIn(b'CONTAINER_LAUNCH', tail)
++        self.assertEqual(self.calls()[-1], [
++            '--profile', 'project', '--write', '/project/output with spaces',
++            '--agent', 'codex', '--yolo', '--', '--no-daemon',
++            'resume', '--last', 'literal $(false); a b'])
++        self.assertEqual((self.root / 'codex-calls').read_text(), 'codex --help\n')
++
++    def test_nonempty_response_does_not_acknowledge(self):
++        proc, master, _ = self.interactive()
++        os.write(master, b'yes\n')
++        time.sleep(0.1)
++        self.assertEqual(len(self.calls()), 1)
++        self.assertIsNone(proc.poll())
++        os.write(master, b'\n')
++        proc.communicate(timeout=10)
++        self.assertEqual(proc.returncode, 0)
++        self.assertEqual(len(self.calls()), 2)
++
++    def test_cancellation_never_launches(self):
++        proc, _, _ = self.interactive()
++        proc.send_signal(signal.SIGINT)
++        proc.communicate(timeout=10)
++        self.assertNotEqual(proc.returncode, 0)
++        self.assertEqual(len(self.calls()), 1)
++
++    def test_eof_never_launches(self):
++        proc, master, _ = self.interactive()
++        os.write(master, b'\x04')
++        proc.communicate(timeout=10)
++        self.assertNotEqual(proc.returncode, 0)
++        self.assertEqual(len(self.calls()), 1)
++
++    def test_nonterminal_never_launches(self):
++        result = self.run_cli('resume', '--last')
++        self.assertNotEqual(result.returncode, 0)
++        self.assertIn('requires a terminal', result.stderr)
++        self.assertEqual(len(self.calls()), 1)
++
++    def test_bad_profile_never_prompts_or_launches(self):
++        result = self.run_cli('--profile=bad')
++        self.assertNotEqual(result.returncode, 0)
++        self.assertNotIn('Press Enter', result.stderr)
++        self.assertEqual(len(self.calls()), 1)
++
++    def test_empty_read_configuration(self):
++        result = self.run_cli('--profile=empty', '--dry-run')
++        self.assertEqual(result.returncode, 0)
++        self.assertIn('(none)', result.stderr)
++
++    def test_module_failure_never_runs_codex(self):
++        self.env['JCODEX_TEST_MODULE_FAIL'] = '1'
++        result = self.run_cli()
++        self.assertNotEqual(result.returncode, 0)
++        self.assertFalse((self.root / 'codex-calls').exists())
++        self.assertEqual(self.calls(), [])
++
++    def test_old_codex_requires_explicit_update(self):
++        self.env['JCODEX_TEST_OLD'] = '1'
++        result = self.run_cli('--dry-run')
++        self.assertNotEqual(result.returncode, 0)
++        self.assertIn('ai-singbox-codex --update', result.stderr)
++        self.assertFalse((self.root / 'npm-calls').exists())
++        self.assertEqual(self.calls(), [])
++
++    def test_update_is_separate_host_operation(self):
++        result = self.run_cli('--update')
++        self.assertEqual(result.returncode, 0, result.stderr)
++        self.assertTrue((self.root / 'npm-calls').exists())
++        self.assertEqual((self.root / 'codex-calls').read_text(), 'codex --version\n')
++        self.assertEqual(self.calls(), [])
++
++    def test_missing_value_help_and_nested_invocation(self):
++        self.assertNotEqual(self.run_cli('--write').returncode, 0)
++        self.assertEqual(self.run_cli('--help').returncode, 0)
++        self.assertEqual(self.calls(), [])
++        self.env['AI_SINGBOX'] = '0.5.0-dev'
++        result = self.run_cli()
++        self.assertNotEqual(result.returncode, 0)
++        self.assertIn('already inside', result.stderr)
++        self.assertEqual(self.calls(), [])
++
++
++if __name__ == '__main__':
++    unittest.main()

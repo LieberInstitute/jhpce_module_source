@@ -1,0 +1,11 @@
+## track only installation recipes and provenance, never installed payloads
+/*
+!/.gitignore
+!/README.md
+!/0.5.0-dev/
+!/0.5.1-dev/
+/0.5.0-dev/*
+!/0.5.0-dev/INSTALLATION.md
+/0.5.1-dev/*
+!/0.5.1-dev/INSTALLATION.md
+!/0.5.1-dev/source.patch
