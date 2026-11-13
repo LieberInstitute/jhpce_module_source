@@ -13,7 +13,6 @@ mv bs linux-amd64/icav2 bin/
 # curl -O [private_link]
 chmod +x dragen-softwaremode-4.6.2.el8.x86_64.bin
 ./dragen-softwaremode-4.6.2.el8.x86_64.bin
-cp dragen-softwaremode-4.6.2.el8.x86_64/bin/dragen bin/
 rm dragen-softwaremode-4.6.2.el8.x86_64.bin
 
 echo 'bin' > .gitignore
