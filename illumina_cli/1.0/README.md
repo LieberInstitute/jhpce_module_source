@@ -9,8 +9,16 @@ rm ica-linux-amd64.zip
 mkdir bin
 mv bs linux-amd64/icav2 bin/
 
+#   DRAGEN software mode 4.6.2
+# curl -O [private_link]
+chmod +x dragen-softwaremode-4.6.2.el8.x86_64.bin
+./dragen-softwaremode-4.6.2.el8.x86_64.bin
+cp dragen-softwaremode-4.6.2.el8.x86_64/bin/dragen bin/
+rm dragen-softwaremode-4.6.2.el8.x86_64.bin
+
 echo 'bin' > .gitignore
 echo linux-amd64 >> .gitignore
+echo dragen* >> .gitignore
 
 chmod 775 -R ..
 
