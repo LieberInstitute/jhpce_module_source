@@ -22,6 +22,10 @@ pip install parquet-tools session_info pyhere openpyxl plotnine ome_types ipyker
 #   Necessary for spatula
 conda install -y -c conda-forge libdeflate
 
+#   Helpful for image work when building spatialLIBD apps
+conda install -y -c conda-forge libvips
+pip install pyvips
+
 #   Install HERGAST
 git clone https://github.com/GYQ-form/HERGAST.git
 cd HERGAST
